@@ -1,0 +1,330 @@
+/* Monospace font */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+/* Global */
+.reveal {
+  font-family: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  color: #d4d4d4;
+  font-size: 32px;
+}
+
+.reveal p {
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+/* Slide background - editor style */
+.reveal .slides section {
+  background: #1e1e1e;
+  padding: 40px 50px;
+  border-left: 3px solid #007acc;
+}
+
+/* Center content */
+.reveal .slides {
+  text-align: center;
+  overflow: visible !important;
+}
+
+.reveal .slides section {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: visible !important;
+}
+
+.reveal .slides section ul,
+.reveal .slides section ol {
+  text-align: left;
+}
+
+/* Titles - styled like functions/classes */
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+  text-transform: none;
+  font-weight: 600;
+}
+
+.reveal h1 {
+  font-size: 2.4em;
+  color: #dcdcaa;
+  margin-bottom: 0.6em;
+}
+
+.reveal h1::before {
+  content: "# ";
+  color: #6a9955;
+}
+
+.reveal h2 {
+  font-size: 2em;
+  color: #4ec9b0;
+}
+
+.reveal h2::before {
+  content: "## ";
+  color: #6a9955;
+}
+
+.reveal h3 {
+  font-size: 1.5em;
+  color: #9cdcfe;
+}
+
+.reveal h3::before {
+  content: "### ";
+  color: #6a9955;
+}
+
+.reveal a {
+  color: #569cd6;
+  text-decoration: none;
+  border-bottom: 1px dashed #569cd6;
+}
+
+.reveal a:hover {
+  color: #9cdcfe;
+  border-bottom-style: solid;
+}
+
+/* Lists - styled like code */
+.reveal ul,
+.reveal ol {
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+
+.reveal ul {
+  list-style: none;
+}
+
+.reveal ul li::before {
+  content: "- ";
+  color: #569cd6;
+  font-weight: bold;
+}
+
+.reveal ol {
+  list-style: none;
+  counter-reset: item;
+}
+
+.reveal ol li {
+  counter-increment: item;
+}
+
+.reveal ol li::before {
+  content: counter(item) ". ";
+  color: #b5cea8;
+  font-weight: bold;
+}
+
+.reveal li {
+  margin: 0.3em 0;
+}
+
+/* Blockquotes - styled like comments */
+.reveal blockquote {
+  border-left: none;
+  padding: 0.5em 1em;
+  color: #6a9955;
+  font-style: italic;
+  background: rgba(106, 153, 85, 0.1);
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.reveal blockquote::before {
+  content: "/* ";
+  color: #6a9955;
+}
+
+.reveal blockquote::after {
+  content: " */";
+  color: #6a9955;
+}
+
+.reveal blockquote p {
+  display: inline;
+  font-size: inherit;
+}
+
+/* Inline code */
+.reveal code {
+  background: #2d2d2d;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+  color: #ce9178;
+  border: 1px solid #404040;
+}
+
+/* Code blocks */
+.reveal pre {
+  background: #1e1e1e;
+  border: 1px solid #404040;
+  border-radius: 4px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+}
+
+.reveal pre code {
+  display: block;
+  padding: 1em 1.2em;
+  font-size: 0.7em;
+  line-height: 1.5;
+  max-height: 500px;
+  overflow: auto;
+  background: transparent;
+  border: none;
+  color: #d4d4d4;
+}
+
+/* Fragment style */
+.reveal .fragment {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.reveal .fragment.visible {
+  opacity: 1;
+}
+
+/* Progress bar - like a loading indicator */
+.reveal .progress {
+  height: 3px;
+  background: #252526;
+}
+
+.reveal .progress span {
+  background: linear-gradient(90deg, #007acc, #4ec9b0);
+}
+
+/* Footer - status bar style */
+.reveal footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 8px 20px;
+  font-size: 0.55em;
+  background: #007acc;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Image styling */
+.reveal section img {
+  max-height: 55vh;
+  border: 1px solid #404040;
+  border-radius: 4px;
+}
+
+/* Strong/bold text - like keywords */
+.reveal strong {
+  color: #c586c0;
+  font-weight: 600;
+}
+
+/* Emphasis - like strings */
+.reveal em {
+  color: #ce9178;
+  font-style: italic;
+}
+
+/* Helper classes */
+.reveal .accent {
+  color: #dcdcaa;
+}
+
+.reveal .muted {
+  color: #6a6a6a;
+}
+
+.reveal .keyword {
+  color: #c586c0;
+}
+
+.reveal .string {
+  color: #ce9178;
+}
+
+.reveal .comment {
+  color: #6a9955;
+}
+
+.reveal .function {
+  color: #dcdcaa;
+}
+
+.reveal .type {
+  color: #4ec9b0;
+}
+
+.reveal .number {
+  color: #b5cea8;
+}
+
+.reveal .big {
+  font-size: 1.6em;
+}
+
+/* Tables - styled like data structures */
+.reveal table {
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.8em;
+  margin-bottom: 1em;
+  border: 1px solid #404040;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.reveal table th,
+.reveal table td {
+  border-right: 1px solid #404040;
+  border-bottom: 1px solid #404040;
+  padding: 0.5em 0.8em;
+}
+
+.reveal table th:last-child,
+.reveal table td:last-child {
+  border-right: none;
+}
+
+.reveal table tr:last-child td {
+  border-bottom: none;
+}
+
+.reveal table th {
+  background: #252526;
+  color: #4ec9b0;
+  font-weight: 600;
+  text-align: left;
+}
+
+.reveal table tr:nth-child(even) td {
+  background: rgba(255,255,255,0.02);
+}
+
+/* Horizontal rule - like a section separator */
+.reveal hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #404040, transparent);
+  margin: 1.5em 0;
+}
+
+/* Cursor blink animation for emphasis */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.reveal .cursor::after {
+  content: "▌";
+  animation: blink 1s infinite;
+  color: #569cd6;
+}
