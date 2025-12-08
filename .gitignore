@@ -1,0 +1,8 @@
+# Nested repo
+data_gathering_crew/
+
+# Node
+node_modules/
+
+# OS
+.DS_Store
