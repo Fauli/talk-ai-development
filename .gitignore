@@ -4,5 +4,12 @@ data_gathering_crew/
 # Node
 node_modules/
 
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+
 # OS
 .DS_Store

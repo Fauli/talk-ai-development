@@ -1,7 +1,8 @@
 # tools.py
 import os
 import subprocess
-from typing import List
+import traceback
+from typing import List, Dict, Any
 
 from crewai_tools import BaseTool
 
@@ -10,13 +11,16 @@ WORKSPACE_ROOT = os.path.join(PROJECT_ROOT, "workspace")
 SPECS_PATH = os.path.join(PROJECT_ROOT, "SPECS.md")
 
 
-def _ensure_workspace():
+def _ensure_workspace() -> None:
     os.makedirs(WORKSPACE_ROOT, exist_ok=True)
 
 
 class ReadSpecsTool(BaseTool):
     name = "read_specs"
-    description = "Reads and returns the full content of SPECS.md, which describes the project requirements."
+    description = (
+        "Reads and returns the full content of SPECS.md, which describes the "
+        "project requirements."
+    )
 
     def _run(self) -> str:
         if not os.path.exists(SPECS_PATH):
@@ -29,7 +33,8 @@ class ReadFileTool(BaseTool):
     name = "read_file"
     description = (
         "Read the content of a text file from the workspace. "
-        "Input should be a relative file path from the workspace root, e.g. 'src/main.py'."
+        "Input should be a relative file path from the workspace root, "
+        "e.g. 'app/main.py' or 'tests/test_pets.py'."
     )
 
     def _run(self, file_path: str) -> str:
@@ -47,10 +52,12 @@ class WriteFileTool(BaseTool):
     name = "write_file"
     description = (
         "Write text content to a file in the workspace, overwriting if it exists. "
-        "Input must be a dict: {'path': 'relative/path.py', 'content': '...'}"
+        "Input must be a dict: {'path': 'relative/path.py', 'content': '...'}.\n\n"
+        "Always use read_file first when modifying an existing file, then apply a "
+        "minimal diff and write the full updated content back."
     )
 
-    def _run(self, data: dict) -> str:
+    def _run(self, data: Dict[str, Any]) -> str:
         _ensure_workspace()
         path = data.get("path")
         content = data.get("content")
@@ -68,7 +75,10 @@ class WriteFileTool(BaseTool):
 
 class ListFilesTool(BaseTool):
     name = "list_files"
-    description = "List all files under the workspace directory, relative paths."
+    description = (
+        "List all files under the workspace directory, relative paths. "
+        "Use this to understand the current project structure."
+    )
 
     def _run(self) -> str:
         _ensure_workspace()
@@ -87,7 +97,9 @@ class RunPytestTool(BaseTool):
     name = "run_pytest"
     description = (
         "Run pytest in the workspace and return the output. "
-        "Use this to verify tests. If tests fail, read and fix the offending files and run again."
+        "Use this to verify tests. If tests fail, read and fix the offending files "
+        "and run again.\n\n"
+        "Optional input: a string with extra pytest arguments, e.g. '-q' or 'tests/'."
     )
 
     def _run(self, extra_args: str = "") -> str:
@@ -104,7 +116,10 @@ class RunPytestTool(BaseTool):
                 text=True,
             )
         except FileNotFoundError:
-            return "ERROR: pytest command not found. Please install pytest in your environment."
+            return (
+                "ERROR: pytest command not found. Please ensure pytest is installed "
+                "in the current Python environment."
+            )
 
         return (
             f"COMMAND: {' '.join(cmd)}\n"
@@ -112,6 +127,54 @@ class RunPytestTool(BaseTool):
             f"STDOUT:\n{proc.stdout}\n"
             f"STDERR:\n{proc.stderr}"
         )
+
+
+class RunAppTool(BaseTool):
+    name = "run_app"
+    description = (
+        "Check that the FastAPI app can be imported successfully. "
+        "This tool attempts to import 'app.main' from the workspace and access a "
+        "FastAPI instance named 'app'.\n\n"
+        "It does NOT start a real HTTP server, it only verifies that the module "
+        "imports without runtime errors and that an 'app' object exists.\n\n"
+        "Input is ignored; pass any dummy string."
+    )
+
+    def _run(self, _: str = "") -> str:
+        _ensure_workspace()
+        # Temporarily adjust sys.path so 'app' can be imported from workspace
+        import sys
+        import importlib
+
+        original_sys_path = list(sys.path)
+        try:
+            if WORKSPACE_ROOT not in sys.path:
+                sys.path.insert(0, WORKSPACE_ROOT)
+
+            try:
+                module = importlib.import_module("app.main")
+            except Exception as e:
+                tb = traceback.format_exc()
+                return (
+                    "Failed to import 'app.main'.\n"
+                    f"Error: {e}\n\n"
+                    f"Traceback:\n{tb}"
+                )
+
+            app_obj = getattr(module, "app", None)
+            if app_obj is None:
+                return (
+                    "Imported 'app.main' successfully, but no attribute 'app' was found. "
+                    "Make sure you expose your FastAPI instance as 'app' in app/main.py."
+                )
+
+            return (
+                "Successfully imported 'app.main' and found a FastAPI 'app' object. "
+                "This indicates the application can start without import-time errors."
+            )
+        finally:
+            # Restore sys.path to avoid polluting the main process
+            sys.path = original_sys_path
 
 
 def get_all_tools():
@@ -122,4 +185,5 @@ def get_all_tools():
         WriteFileTool(),
         ListFilesTool(),
         RunPytestTool(),
+        RunAppTool(),
     ]

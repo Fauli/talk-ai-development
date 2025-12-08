@@ -1,28 +1,35 @@
 # crew.py
 import os
+
 from crewai import Agent, Task, Crew, Process
 from dotenv import load_dotenv
 
 from tools import get_all_tools, SPECS_PATH
 
-load_dotenv()  # for OPENAI_API_KEY etc.
+load_dotenv()  # for OPENAI_API_KEY, etc.
 
 
 # --- Agents ----------------------------------------------------------------- #
+
 
 def create_architect_agent(tools):
     return Agent(
         role="Software Architect",
         goal=(
-            "Read the project specification and design a clean, modular Python architecture "
-            "with a clear file structure and testing strategy."
+            "Read the PixelPet Tamagotchi-style web app specification and design "
+            "a clean, modular Python / FastAPI architecture with a clear file "
+            "structure and testing strategy."
         ),
         backstory=(
-            "You are a seasoned software architect. You excel at turning vague product specs "
-            "into precise, well-structured technical designs. You think in terms of modules, "
-            "responsibilities, boundaries, and tests."
+            "You are a seasoned software architect for web applications. "
+            "You excel at turning product specs into precise, well-structured "
+            "technical designs. You think in terms of modules, responsibilities, "
+            "boundaries, and tests.\n\n"
+            "For this project, you know it is a small but complete PixelPet web "
+            "application with FastAPI backend, SQLite + SQLAlchemy, and simple "
+            "HTML templates or a minimal frontend."
         ),
-        tools=tools,  # can read SPECS and list workspace if needed
+        tools=tools,  # can use read_specs, list_files, etc.
         verbose=True,
         allow_delegation=False,
     )
@@ -30,15 +37,18 @@ def create_architect_agent(tools):
 
 def create_implementer_agent(tools):
     return Agent(
-        role="Senior Python Engineer",
+        role="Senior Python Web Engineer",
         goal=(
-            "Implement the full Python project in the workspace according to the architecture "
-            "and specs, including tests."
+            "Implement the full PixelPet FastAPI web application in the workspace "
+            "according to the architecture and specs, including tests."
         ),
         backstory=(
-            "You are a highly pragmatic Python engineer who writes clean, idiomatic code. "
-            "You favor clarity, modularity, and testability. You create all required files "
-            "in the workspace and keep the structure organized."
+            "You are a highly pragmatic Python engineer who writes clean, "
+            "idiomatic web services. You use FastAPI, SQLAlchemy, and pytest "
+            "comfortably. You design for clarity, modularity, and testability.\n\n"
+            "You are implementing a Tamagotchi-style PixelPet app where users can "
+            "log in, manage a single pet with hunger/energy/happiness, and "
+            "interact through a small web UI."
         ),
         tools=tools,
         verbose=True,
@@ -50,14 +60,16 @@ def create_tester_agent(tools):
     return Agent(
         role="Test Engineer & Bug Fixer",
         goal=(
-            "Ensure the project fully satisfies the spec and that all tests pass. "
-            "Run pytest, analyze failures, fix the code or tests, and re-run until everything passes "
-            "or there are no obvious fixes left."
+            "Ensure the PixelPet web application fully satisfies the spec and "
+            "that all tests pass, and the FastAPI app can start without crashing."
         ),
         backstory=(
-            "You are meticulous about quality. You run tests frequently, read stack traces carefully, "
-            "and apply minimal, targeted fixes. You never introduce new functionality unless needed "
-            "for the spec or to fix failing tests."
+            "You are meticulous about quality and correctness in web backends. "
+            "You run tests frequently, read stack traces carefully, and apply "
+            "minimal, targeted fixes. You never introduce new functionality "
+            "unless it is required by the spec or to fix a failing test.\n\n"
+            "You know this app uses FastAPI, SQLAlchemy, and pytest, and you use "
+            "the provided tools to run pytest and attempt to start the app."
         ),
         tools=tools,
         verbose=True,
@@ -67,18 +79,65 @@ def create_tester_agent(tools):
 
 # --- Tasks ------------------------------------------------------------------ #
 
+
 def create_plan_task(architect: Agent):
     description = f"""
-1. Use the read_specs tool to read SPECS.md and understand the project requirements.
-2. Extract the core responsibilities, external interfaces (CLI, API, etc.), and constraints.
-3. Design a Python project architecture including:
-   - A proposed directory structure under the 'workspace/' folder
-   - Key modules and their responsibilities
-   - Data flows between modules
-   - A testing strategy (which modules get tests, at what level, etc.)
-4. Make sure the design is realistic and implementable in a single session.
+You are the architect for a PixelPet (Tamagotchi-style) web application.
 
-Output a clear, concise design document that the engineers can follow.
+Steps:
+
+1. Use the read_specs tool to read SPECS.md and fully understand the project
+   requirements for the PixelPet app (including backend, frontend, persistence,
+   and tests).
+
+2. Extract the core responsibilities and constraints:
+   - Web framework (FastAPI).
+   - Database (SQLite + SQLAlchemy).
+   - Auth, pet state machine, scheduling/decay logic, web UI, tests.
+
+3. Design a Python project architecture under the 'workspace/' directory that
+   follows these conventions:
+   - Application package: 'app/'
+   - Suggested minimal structure:
+       app/
+         __init__.py
+         main.py              # FastAPI app, routers mounted here
+         database.py          # SQLAlchemy setup, SessionLocal, Base
+         models.py            # SQLAlchemy models (User, Pet)
+         auth.py              # auth helpers, password hashing, dependency
+         pet_service.py       # business logic for pet state transitions
+         scheduler.py         # background task / decay logic if needed
+         routes/
+           __init__.py
+           pets.py            # pet-related API routes
+           users.py           # auth/user routes (optional)
+         templates/
+           base.html
+           index.html
+           pet.html
+         static/
+           css/
+             style.css
+           img/
+             pixel_pet.png    # placeholder sprite
+       tests/
+         test_auth.py
+         test_pet_logic.py
+         test_routes.py
+
+   - If the SPECS.md suggests a slightly different structure, adapt carefully
+     but keep it similarly modular.
+
+4. Include a testing strategy:
+   - What tests to write.
+   - Which modules they should target.
+   - How to run tests (pytest).
+   - Any fixtures/in-memory DB setup.
+
+5. Make sure the design is realistic and implementable by a single engineer
+   in one session.
+
+Output a clear, concise design document that the implementer can follow.
 """
     return Task(
         description=description,
@@ -86,7 +145,7 @@ Output a clear, concise design document that the engineers can follow.
         expected_output=(
             "A detailed design document with:\n"
             "- A bullet list of features and requirements from SPECS.md\n"
-            "- A directory tree for the workspace\n"
+            "- A directory tree for the workspace/app\n"
             "- A list of modules and their responsibilities\n"
             "- A test plan (which tests to create, how they are organized)\n"
         ),
@@ -95,62 +154,173 @@ Output a clear, concise design document that the engineers can follow.
 
 def create_implementation_task(implementer: Agent):
     description = """
-Using the design produced by the architect and the content of SPECS.md:
+You are the Senior Python Web Engineer implementing the PixelPet FastAPI app.
 
-1. Create all necessary Python modules, packages, and support files in the 'workspace/' directory.
-2. Implement the functionality as described in SPECS.md and the design.
-3. Follow these rules:
-   - Use idiomatic Python, with type hints where helpful.
-   - Keep functions small and focused.
-   - Document non-trivial functions/classes with short docstrings.
-4. Create tests using pytest:
-   - Place tests under 'tests/' in the workspace.
-   - Ensure tests cover core behavior and edge cases mentioned in the spec.
-5. Use the write_file tool to write code and test files, and list_files / read_file to inspect them.
+Context:
+- You have the design produced by the architect (previous task output).
+- You have access to SPECS.md through the read_specs tool.
+- You are working inside the 'workspace/' directory.
 
-Do NOT run pytest in this task; that is the tester's job.
+Follow this process:
+
+1. Project structure
+   - First, create the basic folder structure and placeholder files using the
+     write_file tool (they can be minimal at first).
+   - Suggested structure (adapt if design changed):
+       app/
+         __init__.py
+         main.py
+         database.py
+         models.py
+         auth.py
+         pet_service.py
+         scheduler.py
+         routes/
+           __init__.py
+           pets.py
+           users.py
+         templates/
+           base.html
+           index.html
+           pet.html
+         static/
+           css/
+             style.css
+           img/
+             pixel_pet.png
+       tests/
+         test_auth.py
+         test_pet_logic.py
+         test_routes.py
+
+2. Implement backend logic
+   - Configure FastAPI app in app/main.py.
+   - Configure SQLite + SQLAlchemy in app/database.py.
+   - Define User and Pet models in app/models.py according to the spec.
+   - Implement authentication helpers in app/auth.py (password hashing, dependencies).
+   - Implement pet state business logic (hunger, happiness, energy, decay,
+     actions like feed/play/sleep, evolution) in app/pet_service.py.
+   - Implement routes in app/routes/pets.py and app/routes/users.py (or similar),
+     wiring them into FastAPI in app/main.py.
+   - Implement a simple scheduler/decay mechanism in app/scheduler.py (e.g.,
+     background tasks or approximate logic on each request).
+
+3. Implement frontend/templates
+   - Use Jinja2 templates in app/templates to render pet status, action buttons,
+     and a simple login/registration page.
+   - Keep it minimal but visually understandable (bars, labels, basic CSS).
+
+4. Tests
+   - Under tests/, create pytest-based tests:
+     - Authentication logic (login/registration).
+     - Pet state machine transitions and decay rules.
+     - Basic route tests using FastAPI's TestClient.
+
+5. Code quality
+   - Use idiomatic, clean Python.
+   - Use type hints for function signatures.
+   - Add short docstrings for non-trivial functions and classes.
+   - When modifying existing files, ALWAYS:
+     - use list_files/read_file to inspect the current content;
+     - then compute a minimal but complete new version and write it back with write_file.
+   - Do NOT rewrite the entire project or delete important files unless it is
+     clearly required.
+
+6. Tools
+   - Use write_file to create/modify files.
+   - Use list_files to understand the current structure.
+   - Use read_file to inspect existing code.
+
+Important constraints:
+- Do NOT run pytest or start the app in this task; that is the tester's job.
+- Prefer incremental edits and small, focused modules.
+
+Your final answer should briefly describe which files you created/updated and
+what remains for testing.
 """
     return Task(
         description=description,
         agent=implementer,
         expected_output=(
             "All project source files and tests created in the workspace, "
-            "ready to be executed with pytest."
+            "ready to be executed with pytest. A short summary of the created "
+            "files and their responsibilities."
         ),
     )
 
 
 def create_test_and_fix_task(tester: Agent):
     description = """
+You are the Test Engineer & Bug Fixer for the PixelPet FastAPI web app.
+
 Your job is to verify and harden the project.
 
-1. Use the run_pytest tool to run the test suite in the workspace.
-2. If tests fail or errors occur:
-   - Inspect the error messages and stack traces.
-   - Use read_file to open the relevant files.
-   - Make targeted fixes using write_file.
-   - Re-run run_pytest to confirm that the issue is resolved.
-3. Repeat this loop until:
-   - pytest exits with return code 0 (all tests pass), OR
-   - You believe further automated fixes are not obvious or safe.
-4. Also check that the behavior matches SPECS.md (via read_specs), and if there is a mismatch, fix code/tests accordingly.
+Definition of Done:
+- pytest exits with return code 0 (all tests pass).
+- The FastAPI app can be started (imported) without crashing.
+- The behavior matches the key requirements from SPECS.md.
 
-In your final answer, provide:
-- A short summary of the test runs (how many times, high-level issues fixed).
-- The final pytest result.
-- A brief checklist of how the implementation satisfies the spec.
+Process:
+
+1. Initial understanding
+   - Use list_files to see what files exist under workspace/.
+   - Optionally use read_specs to refresh your understanding of the PixelPet spec.
+
+2. Run tests
+   - Use run_pytest (optionally with arguments like '-q') to run the test suite.
+   - Carefully read the RETURN CODE, STDOUT, and STDERR.
+
+3. If there are failures or errors:
+   - Identify the most relevant error(s) from the pytest output.
+   - Use read_file to open the involved source or test files.
+   - Apply minimal, targeted fixes using write_file.
+   - Avoid large rewrites; focus on the failing paths first.
+   - Run run_pytest again to verify the fix.
+
+4. Repeat:
+   - Repeat this fix/test cycle as needed, but at most 8 times.
+   - If tests are still failing after ~8 iterations or the remaining issues
+     are too complex, stop and produce a clear report of remaining problems.
+
+5. Verify app importability
+   - Once pytest return code is 0, use run_app to attempt to import the FastAPI app.
+   - Inspect the output to confirm that:
+     - 'app.main' can be imported from the workspace.
+     - a FastAPI instance named 'app' exists in that module.
+   - If there are import errors or missing 'app', treat them like test failures:
+     inspect files, fix, re-run run_app, and re-run run_pytest if necessary.
+
+6. Alignment with SPECS.md
+   - Optionally re-check SPECS.md and confirm that:
+     - User has a pet with hunger/energy/happiness.
+     - Pet actions (feed/play/sleep) behave as described.
+     - Authentication and basic UI flow are consistent with the spec.
+   - If there is a mismatch, fix code or tests accordingly (within reason).
+
+Important constraints:
+- Prefer multiple small, precise fixes over large refactors.
+- Never delete large parts of the project unless clearly broken beyond repair.
+- Focus first on making tests pass and the app start; extra polish is secondary.
+
+Your final answer MUST include:
+- A short summary of how many times you ran pytest and with what outcomes.
+- The final pytest result (return code).
+- Whether run_app indicates a successful startup.
+- A brief checklist of how the implementation satisfies the main points of SPECS.md.
+- If anything remains broken or incomplete, list it explicitly.
 """
     return Task(
         description=description,
         agent=tester,
         expected_output=(
-            "A final report that all tests pass or a clear explanation of remaining failures, "
-            "plus a summary of how the implementation aligns with the specification."
+            "A final QA report: number of pytest runs, remaining issues if any, "
+            "confirmation that the app can start, and a checklist of spec coverage."
         ),
     )
 
 
 # --- Crew factory ----------------------------------------------------------- #
+
 
 def create_crew():
     tools = get_all_tools()
