@@ -1,12 +1,15 @@
 # crew.py
 import os
 
-from crewai import Agent, Task, Crew, Process
+from crewai import Agent, Task, Crew, Process, LLM
 from dotenv import load_dotenv
 
 from tools import get_all_tools, SPECS_PATH
 
-load_dotenv()  # for OPENAI_API_KEY, etc.
+load_dotenv()  # for ANTHROPIC_API_KEY
+
+# Configure Anthropic Claude
+llm = LLM(model="anthropic/claude-sonnet-4-20250514", temperature=0.7)
 
 
 # --- Agents ----------------------------------------------------------------- #
@@ -29,7 +32,8 @@ def create_architect_agent(tools):
             "application with FastAPI backend, SQLite + SQLAlchemy, and simple "
             "HTML templates or a minimal frontend."
         ),
-        tools=tools,  # can use read_specs, list_files, etc.
+        tools=tools,
+        llm=llm,
         verbose=True,
         allow_delegation=False,
     )
@@ -51,6 +55,7 @@ def create_implementer_agent(tools):
             "interact through a small web UI."
         ),
         tools=tools,
+        llm=llm,
         verbose=True,
         allow_delegation=False,
     )
@@ -72,6 +77,7 @@ def create_tester_agent(tools):
             "the provided tools to run pytest and attempt to start the app."
         ),
         tools=tools,
+        llm=llm,
         verbose=True,
         allow_delegation=False,
     )
