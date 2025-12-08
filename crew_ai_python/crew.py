@@ -1,5 +1,8 @@
 # crew.py
 import os
+import subprocess
+import json
+from datetime import datetime
 
 from crewai import Agent, Task, Crew, Process, LLM
 from dotenv import load_dotenv
@@ -314,6 +317,12 @@ Your final answer MUST include:
 - Whether run_app indicates a successful startup.
 - A brief checklist of how the implementation satisfies the main points of SPECS.md.
 - If anything remains broken or incomplete, list it explicitly.
+
+IMPORTANT: Before finishing, use write_file to create/update 'TODO.md' in the workspace with:
+- Any remaining bugs or failing tests
+- Missing features from SPECS.md
+- Suggested next steps
+This helps the next iteration know what to work on.
 """
     return Task(
         description=description,
@@ -325,10 +334,60 @@ Your final answer MUST include:
     )
 
 
-# --- Crew factory ----------------------------------------------------------- #
+# --- Fix implementation task (for subsequent iterations) -------------------- #
 
 
-def create_crew():
+def create_fix_implementation_task(implementer: Agent, error_report: str):
+    """Task for implementer to fix issues based on tester's error report."""
+    description = f"""
+You are the Senior Python Web Engineer. The tester found issues with your implementation.
+
+TESTER'S ERROR REPORT:
+{error_report}
+
+Your job is to FIX these issues. Follow this process:
+
+1. FIRST: Use read_file to check 'TODO.md' in the workspace - it contains the tester's
+   notes about remaining bugs, missing features, and suggested fixes.
+
+2. Read the error report above and identify the root causes.
+
+3. Use list_files to see the current project structure.
+
+4. Use read_file to examine the problematic files mentioned in the error report or TODO.md.
+
+5. Apply targeted fixes using write_file:
+   - Fix import errors
+   - Fix missing dependencies
+   - Fix logic bugs
+   - Fix test failures
+   - Ensure all required files exist
+
+6. Do NOT rewrite everything from scratch. Make minimal, focused fixes.
+
+7. After fixing, briefly summarize what you changed.
+
+Important:
+- Always read TODO.md first for context
+- Focus on the errors mentioned in the report
+- Read existing code before modifying
+- Keep changes minimal and targeted
+"""
+    return Task(
+        description=description,
+        agent=implementer,
+        expected_output=(
+            "A summary of fixes applied to resolve the issues from the error report. "
+            "List each file modified and what was changed."
+        ),
+    )
+
+
+# --- Crew factories --------------------------------------------------------- #
+
+
+def create_initial_crew():
+    """First iteration: Architect → Implementer → Tester"""
     tools = get_all_tools()
 
     architect = create_architect_agent(tools)
@@ -342,20 +401,168 @@ def create_crew():
     crew = Crew(
         agents=[architect, implementer, tester],
         tasks=[plan_task, implementation_task, test_task],
-        process=Process.sequential,  # plan -> implement -> test/fix
+        process=Process.sequential,
+        memory=True,  # Enable persistent memory across runs
         verbose=True,
     )
     return crew
+
+
+def create_fix_crew(error_report: str):
+    """Subsequent iterations: Implementer (with errors) → Tester"""
+    tools = get_all_tools()
+
+    implementer = create_implementer_agent(tools)
+    tester = create_tester_agent(tools)
+
+    fix_task = create_fix_implementation_task(implementer, error_report)
+    test_task = create_test_and_fix_task(tester)
+
+    crew = Crew(
+        agents=[implementer, tester],
+        tasks=[fix_task, test_task],
+        process=Process.sequential,
+        memory=True,  # Enable persistent memory across runs
+        verbose=True,
+    )
+    return crew
+
+
+# --- Main loop with status tracking ----------------------------------------- #
+
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+STATUS_FILE = os.path.join(PROJECT_ROOT, "STATUS.json")
+WORKSPACE_ROOT = os.path.join(PROJECT_ROOT, "workspace")
+
+
+def load_status():
+    if os.path.exists(STATUS_FILE):
+        with open(STATUS_FILE, "r") as f:
+            return json.load(f)
+    return {
+        "iteration": 0,
+        "phase": "initial",  # "initial" or "fixing"
+        "last_error_report": None,
+        "history": [],
+        "completed": False
+    }
+
+
+def save_status(status):
+    with open(STATUS_FILE, "w") as f:
+        json.dump(status, f, indent=2)
+
+
+def check_success():
+    """Check if tests pass and app can be imported. Returns (success, tests_pass, app_works, error_details)"""
+    error_details = []
+
+    # Run pytest
+    try:
+        result = subprocess.run(
+            ["pytest", "-v", "--tb=short"],
+            cwd=WORKSPACE_ROOT,
+            capture_output=True,
+            text=True,
+            timeout=120
+        )
+        tests_pass = result.returncode == 0
+        if not tests_pass:
+            error_details.append(f"PYTEST OUTPUT:\n{result.stdout}\n{result.stderr}")
+    except Exception as e:
+        tests_pass = False
+        error_details.append(f"PYTEST ERROR: {e}")
+
+    # Check app import
+    try:
+        import sys
+        import importlib
+        if WORKSPACE_ROOT not in sys.path:
+            sys.path.insert(0, WORKSPACE_ROOT)
+        importlib.invalidate_caches()
+        # Clear cached modules
+        for mod in list(sys.modules.keys()):
+            if mod.startswith("app"):
+                del sys.modules[mod]
+        module = importlib.import_module("app.main")
+        app_works = hasattr(module, "app")
+        if not app_works:
+            error_details.append("APP ERROR: 'app' object not found in app.main")
+    except Exception as e:
+        app_works = False
+        error_details.append(f"APP IMPORT ERROR: {e}")
+
+    error_report = "\n\n".join(error_details) if error_details else None
+    return tests_pass and app_works, tests_pass, app_works, error_report
 
 
 def main():
     if not os.path.exists(SPECS_PATH):
         raise SystemExit("SPECS.md not found. Please create SPECS.md next to crew.py.")
 
-    crew = create_crew()
-    result = crew.kickoff()
-    print("\n=== FINAL RESULT ===\n")
-    print(result)
+    MAX_ITERATIONS = 10
+    status = load_status()
+
+    if status["completed"]:
+        print("Project already completed! Delete STATUS.json to restart.")
+        return
+
+    while status["iteration"] < MAX_ITERATIONS:
+        status["iteration"] += 1
+        iteration = status["iteration"]
+
+        print(f"\n{'='*60}")
+        print(f"  ITERATION {iteration} / {MAX_ITERATIONS}")
+        print(f"  Phase: {status['phase']}")
+        print(f"{'='*60}\n")
+
+        # Choose crew based on phase
+        if status["phase"] == "initial":
+            print("Running: Architect → Implementer → Tester")
+            crew = create_initial_crew()
+        else:
+            print("Running: Implementer (fixing) → Tester")
+            crew = create_fix_crew(status["last_error_report"] or "No previous error report")
+
+        # Run the crew
+        result = crew.kickoff()
+
+        # Check success
+        success, tests_pass, app_works, error_report = check_success()
+
+        # Log this iteration
+        status["history"].append({
+            "iteration": iteration,
+            "phase": status["phase"],
+            "timestamp": datetime.now().isoformat(),
+            "tests_pass": tests_pass,
+            "app_works": app_works,
+            "success": success
+        })
+
+        # Update phase and error report for next iteration
+        status["phase"] = "fixing"  # After first run, always in fixing mode
+        status["last_error_report"] = error_report
+        save_status(status)
+
+        print(f"\n--- Iteration {iteration} Result ---")
+        print(f"Tests pass: {tests_pass}")
+        print(f"App works:  {app_works}")
+        print(f"Success:    {success}")
+
+        if success:
+            status["completed"] = True
+            save_status(status)
+            print("\n✅ PROJECT COMPLETE!")
+            print(f"\n=== FINAL RESULT ===\n{result}")
+            return
+
+        print(f"\n⚠️  Not complete yet.")
+        if error_report:
+            print(f"\nError summary (will be passed to next iteration):\n{error_report[:500]}...")
+
+    print(f"\n❌ Max iterations ({MAX_ITERATIONS}) reached without success.")
+    print("Check STATUS.json for history. You can increase MAX_ITERATIONS or debug manually.")
 
 
 if __name__ == "__main__":
