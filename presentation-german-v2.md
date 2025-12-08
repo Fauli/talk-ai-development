@@ -1,18 +1,16 @@
-# **Agentic Programming**
-### Wenn Software beginnt, Software zu schreiben
+# **Vibe coding**
+## Wenn Software beginnt, Software zu schreiben
 
-*Ein Vortrag für neue Programmierer*
+*the good, the bad and the ugly*
 
 ---
 
-## Wer bin ich?
+## me.introduce()
 
-- Franz Faul
+- Franz Faul, ZKB, ehem ZHAWler
 - Mache vieles mit KI-gestützter und agentischer Entwicklung
 - Interessiert, wie sich Softwareentwicklung verändert
-
-👉 Dieser Vortrag gibt euch eine mentale Landkarte des Wandels in der Programmierung.
-
+- https://github.com/fauli
 ---
 
 ## Einstiegsfrage
@@ -28,6 +26,7 @@
 ---
 
 ## Agenda
+*tbd with Merne: yes/no?*
 
 1. 🔙 Geschichte — wie wir hierher kamen
 2. 🧠 LLMs & Coding-Assistenten
@@ -39,7 +38,7 @@
 ---
 
 # Teil 1
-## Wie wir hierher kamen
+## time.rewind()
 
 ---
 
@@ -127,7 +126,7 @@ Sie können:
 
 ---
 
-## Der neue Workflow
+## Der neue (alte) Workflow
 
 Alter Weg:
 
@@ -160,10 +159,7 @@ Du wechselst vom **Code tippen** zum **über Code nachdenken**.
 
 Im Gegensatz zu Assistenten können Agenten:
 
-- Planen
-- Ausführen
-- Beobachten und bewerten
-- Iterieren
+*Planen, Ausführen, Beobachten und bewerten, Iterieren*
 
 ---
 
@@ -179,9 +175,9 @@ Im Gegensatz zu Assistenten können Agenten:
 
 ---
 
-## Die Agenten-Schleife
+## Let the vibin' begin!
 
-1. 🎯 Ziel empfangen
+1. 🎯 Ziel erhalten
 2. 🧩 Schritte planen
 3. 🛠️ Aktionen ausführen
 4. 👀 Ergebnisse beobachten
@@ -217,7 +213,7 @@ Der Bereich entwickelt sich *schnell.*
 
 ## "KI-Software-Ingenieur" Beispiele
 
-Behauptete Fähigkeiten:
+"Fähigkeiten":
 
 - Ein Repository verstehen
 - Features planen
@@ -233,27 +229,24 @@ Behauptete Fähigkeiten:
 
 > "Füge Logging zu allen API-Endpunkten hinzu und gib standardisiertes Fehler-JSON zurück."
 
-Agenten-Schritte:
-
 - Scannt Repository
 - Schlägt Plan vor
 - Ändert mehrere Dateien
 - Führt Tests aus
 - Iteriert basierend auf Fehlern
 
-Das geht über Autovervollständigung hinaus.
-
 ---
 
 # Teil 5
-## Grenzen, Risiken & Ethik
+## 🥁 The ugly
 
 ---
 
 ## Wo Agenten scheitern
 
 - Halluzinierte oder falsche Lösungen
-- Endlosschleifen
+- Sehr verboser code
+- Ähnliche Lösungen an verschiedenen Orten
 - Falsches Selbstvertrauen
 - Mangelndes Domänenwissen
 - Überanpassung an Muster statt echtem Denken

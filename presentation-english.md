@@ -1,9 +1,7 @@
 # **Agentic Programming**
-### When Software Starts Writing Software
+## When Software Starts Writing Software
 
-**A talk for new programmers**
-
-💡 *How we got here · What’s happening now · Where it’s going*
+*A talk for new programmers*
 
 ---
 
