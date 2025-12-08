@@ -8,7 +8,7 @@
 A presentation about AI-assisted and agentic software development, with a live CrewAI demo.
 
 <p align="center">
-  <img src="assets/cyberpunk-otter-cute.png" alt="PixelPet Otter" width="300">
+  <img src="assets/cyberpunk-otter-cute.png" alt="PixelPet Otter" width="500">
 </p>
 
 ## Contents
