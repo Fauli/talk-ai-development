@@ -1,6 +1,15 @@
 # Agentic Programming Talk
 
+[![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![CrewAI](https://img.shields.io/badge/CrewAI-Agents-FF6B6B?logo=robot&logoColor=white)](https://crewai.com)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 A presentation about AI-assisted and agentic software development, with a live CrewAI demo.
+
+<p align="center">
+  <img src="assets/cyberpunk-otter-cute.png" alt="PixelPet Otter" width="300">
+</p>
 
 ## Contents
 
