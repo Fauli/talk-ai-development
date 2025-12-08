@@ -1,0 +1,17 @@
+# Pet Sprite Images
+
+This directory should contain pixel art sprites for the pets:
+
+## Normal Sprites:
+- otter.png
+- cat.png
+- dragon.png
+- axolotl.png
+
+## Evolved Sprites:
+- otter_evolved.png
+- cat_evolved.png
+- dragon_evolved.png
+- axolotl_evolved.png
+
+For now, placeholder images can be used or the app will show broken image icons until proper sprites are added.

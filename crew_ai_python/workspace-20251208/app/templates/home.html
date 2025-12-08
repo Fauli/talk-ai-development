@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}PixelPet - Welcome{% endblock %}
+
+{% block content %}
+<div class="welcome-container">
+    <div class="welcome-message">
+        <h2 class="pixel-subtitle">Welcome to PixelPet!</h2>
+        <p class="pixel-text">Adopt and care for your very own virtual pixel pet!</p>
+    </div>
+
+    {% if user %}
+    <div class="user-welcome">
+        <p class="pixel-text">Hello, {{ user.email }}!</p>
+        <a href="/game" class="pixel-button">Go to your Pet</a>
+        <form action="/logout" method="post" style="display: inline;">
+            <button type="submit" class="pixel-button" style="background: #e74c3c;">Logout</button>
+        </form>
+    </div>
+    {% else %}
+    <div class="auth-options">
+        <p class="pixel-text">Get started by logging in or creating an account:</p>
+        <div class="button-group">
+            <a href="/login" class="pixel-button">Login</a>
+            <a href="/login" class="pixel-button" style="background: #9b59b6;">Register</a>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="features">
+        <h3 class="pixel-subtitle">Features:</h3>
+        <ul class="feature-list">
+            <li>Choose from 4 adorable species</li>
+            <li>Feed, play, and care for your pet</li>
+            <li>Watch your pet evolve!</li>
+        </ul>
+    </div>
+</div>
+
+<style>
+.welcome-container {
+    text-align: center;
+    max-width: 400px;
+    margin: 0 auto;
+}
+.welcome-message {
+    margin-bottom: 20px;
+}
+.welcome-message p {
+    margin-top: 10px;
+}
+.user-welcome, .auth-options {
+    margin: 20px 0;
+    padding: 15px;
+    border: 2px solid #333;
+    background: #e8f4f8;
+}
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
+.features {
+    margin-top: 20px;
+    text-align: left;
+}
+.feature-list {
+    list-style: none;
+    margin-top: 10px;
+}
+.feature-list li {
+    padding: 5px 0;
+    font-size: 10px;
+}
+.feature-list li::before {
+    content: "★ ";
+    color: #ffd93d;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}PixelPet - Your Pet{% endblock %}
+
+{% block content %}
+<div class="pet-dashboard">
+    <div id="no-pet" class="create-pet-section" style="display: block;">
+        <h2 class="pixel-subtitle">Create Your PixelPet!</h2>
+        <form id="create-pet-form">
+            <div class="form-group">
+                <label for="pet-name">Pet Name:</label>
+                <input type="text" id="pet-name" name="name" required maxlength="20">
+            </div>
+            <div class="form-group">
+                <label for="pet-species">Species:</label>
+                <select id="pet-species" name="species" required>
+                    {% for species in species_list %}
+                    <option value="{{ species }}">{{ species.title() }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="pixel-button">Create Pet</button>
+        </form>
+    </div>
+    
+    <div id="pet-display" class="pet-container" style="display: none;">
+        <div class="pet-info">
+            <h2 id="pet-name-display" class="pixel-subtitle"></h2>
+            <div class="pet-sprite">
+                <img id="pet-image" src="" alt="Your Pet" class="pixel-pet">
+                <div id="sleep-overlay" class="sleep-overlay" style="display: none;">😴</div>
+            </div>
+        </div>
+        
+        <div class="stats-container">
+            <div class="stat">
+                <label>Hunger:</label>
+                <div class="stat-bar">
+                    <div id="hunger-bar" class="stat-fill hunger"></div>
+                </div>
+                <span id="hunger-value">50</span>%
+            </div>
+            <div class="stat">
+                <label>Happiness:</label>
+                <div class="stat-bar">
+                    <div id="happiness-bar" class="stat-fill happiness"></div>
+                </div>
+                <span id="happiness-value">50</span>%
+            </div>
+            <div class="stat">
+                <label>Energy:</label>
+                <div class="stat-bar">
+                    <div id="energy-bar" class="stat-fill energy"></div>
+                </div>
+                <span id="energy-value">50</span>%
+            </div>
+        </div>
+        
+        <div class="actions-container">
+            <button id="feed-btn" class="pixel-button action-btn">🍎 Feed</button>
+            <button id="play-btn" class="pixel-button action-btn">🎾 Play</button>
+            <button id="sleep-btn" class="pixel-button action-btn">😴 Sleep</button>
+            <button id="evolve-btn" class="pixel-button action-btn evolution-btn" style="display: none;">✨ Evolve</button>
+        </div>
+        
+        <div id="message-area" class="message-area"></div>
+    </div>
+</div>
+{% endblock %}

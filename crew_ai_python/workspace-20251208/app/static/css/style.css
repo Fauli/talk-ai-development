@@ -1,0 +1,324 @@
+/* PixelPet CSS - Pixel Art Style */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+}
+
+.container {
+    background: #f0f8ff;
+    border: 4px solid #333;
+    border-radius: 0;
+    padding: 20px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 8px 8px 0px #000;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.pixel-title {
+    font-size: 18px;
+    color: #4a90e2;
+    text-shadow: 2px 2px 0px #000;
+    margin-bottom: 10px;
+}
+
+.pixel-subtitle {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.pixel-text {
+    font-size: 10px;
+    color: #666;
+}
+
+/* Authentication Forms */
+.auth-container {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.tab-container {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 10px;
+    background: #ddd;
+    border: 2px solid #333;
+    border-bottom: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 10px;
+}
+
+.tab-button.active {
+    background: #f0f8ff;
+}
+
+.form-container {
+    border: 2px solid #333;
+    padding: 20px;
+    background: #f0f8ff;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 10px;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #333;
+    background: #fff;
+    font-family: inherit;
+    font-size: 10px;
+}
+
+.pixel-button {
+    background: #4CAF50;
+    color: white;
+    border: 3px solid #333;
+    padding: 12px 20px;
+    font-family: inherit;
+    font-size: 10px;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 3px 3px 0px #000;
+    transition: all 0.1s;
+}
+
+.pixel-button:hover {
+    background: #45a049;
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0px #000;
+}
+
+.pixel-button:active {
+    transform: translate(3px, 3px);
+    box-shadow: none;
+}
+
+/* Pet Dashboard */
+.pet-dashboard {
+    text-align: center;
+}
+
+.pet-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.pet-info {
+    text-align: center;
+}
+
+.pet-sprite {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    background: #e8f4f8;
+    border: 3px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pixel-pet {
+    max-width: 100px;
+    max-height: 100px;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+.sleep-overlay {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 20px;
+    background: white;
+    border: 2px solid #333;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Stats */
+.stats-container {
+    width: 100%;
+    max-width: 300px;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.stat label {
+    width: 80px;
+    text-align: left;
+    margin-bottom: 0;
+    font-size: 9px;
+}
+
+.stat-bar {
+    flex: 1;
+    height: 20px;
+    background: #ddd;
+    border: 2px solid #333;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.stat-fill.hunger {
+    background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+}
+
+.stat-fill.happiness {
+    background: linear-gradient(90deg, #ffd93d, #ffed4e);
+}
+
+.stat-fill.energy {
+    background: linear-gradient(90deg, #4ecdc4, #6dd5db);
+}
+
+.stat span {
+    font-size: 9px;
+    min-width: 35px;
+    text-align: right;
+}
+
+/* Actions */
+.actions-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.action-btn {
+    flex: 1;
+    min-width: 80px;
+    background: #2196F3;
+}
+
+.action-btn:hover {
+    background: #1976D2;
+}
+
+.evolution-btn {
+    background: #9C27B0 !important;
+    animation: pulse 1s infinite;
+}
+
+.evolution-btn:hover {
+    background: #7B1FA2 !important;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Messages */
+.message-area {
+    margin-top: 20px;
+    padding: 10px;
+    border: 2px solid #333;
+    background: #fff3cd;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+}
+
+.message-area.success {
+    background: #d4edda;
+    border-color: #28a745;
+}
+
+.message-area.error {
+    background: #f8d7da;
+    border-color: #dc3545;
+}
+
+/* Create Pet Section */
+.create-pet-section {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 2px solid #333;
+    background: #f0f8ff;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 2px solid #ddd;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+    
+    .pixel-title {
+        font-size: 14px;
+    }
+    
+    .actions-container {
+        flex-direction: column;
+    }
+    
+    .action-btn {
+        width: 100%;
+    }
+}
