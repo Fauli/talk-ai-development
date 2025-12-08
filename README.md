@@ -1,3 +1,5 @@
+<div align="center">
+
 # Agentic Programming Talk
 
 [![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white)](https://python.org)
@@ -5,11 +7,13 @@
 [![CrewAI](https://img.shields.io/badge/CrewAI-Agents-FF6B6B?logo=robot&logoColor=white)](https://crewai.com)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-A presentation about AI-assisted and agentic software development, with a live CrewAI demo.
+*A presentation about AI-assisted and agentic software development, with a live CrewAI demo.*
 
-<p align="center">
-  <img src="assets/cyberpunk-otter-cute.png" alt="PixelPet Otter" width="500">
-</p>
+<img src="assets/cyberpunk-otter-cute.png" alt="PixelPet Otter" width="500">
+
+---
+
+</div>
 
 ## Contents
 
@@ -21,6 +25,8 @@ A presentation about AI-assisted and agentic software development, with a live C
 ### CrewAI Demo
 - `crew_ai_python/` - Autonomous agent crew that builds a PixelPet web app
 
+---
+
 ## Presentation Usage
 
 ```bash
@@ -30,6 +36,8 @@ A presentation about AI-assisted and agentic software development, with a live C
 
 Requires [reveal-md](https://github.com/webpro/reveal-md) (auto-installed if missing).
 
+---
+
 ## CrewAI Demo
 
 The `crew_ai_python/` folder contains a multi-agent system that autonomously builds a Tamagotchi-style web application.
@@ -38,9 +46,9 @@ The `crew_ai_python/` folder contains a multi-agent system that autonomously bui
 
 | Agent | Role | Tools |
 |-------|------|-------|
-| Architect | Designs project structure | read_specs, list_files |
-| Implementer | Writes the code | read/write files, list_files |
-| Tester | Runs tests, fixes bugs | All tools + pytest, pip_install |
+| **Architect** | Designs project structure | read_specs, list_files |
+| **Implementer** | Writes the code | read/write files, list_files |
+| **Tester** | Runs tests, fixes bugs | All tools + pytest, pip_install |
 
 ### Running the Demo
 
@@ -75,6 +83,10 @@ Open http://localhost:1337 to play.
 - `SPECS.md` - Project requirements the agents follow
 - `DEV_PROCESS.md` - How the agent iteration loop works
 
-## Author
+---
 
-Franz Faul
+<div align="center">
+
+**Author:** Franz Faul
+
+</div>
