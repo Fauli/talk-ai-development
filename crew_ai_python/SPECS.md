@@ -33,15 +33,21 @@ The app should feel playful, minimalistic, and fun.
 3. **User Actions**
 
    * Home screen → Nice welcome page, show pet if user has one, otherwise register/login
-   * Feed → increases hunger, decreases happiness if overfed
-   * Play → increases happiness, decreases energy
-   * Sleep → restores energy but user cannot interact while sleeping
-     * **Sleep duration: 2 minutes** (not hours - keep it short for playability)
-     * When waking up, energy is restored by +30
+   * Feed → `hunger += 20`, if hunger > 90 then `happiness -= 10` (overfed penalty)
+   * Play → `happiness += 15`, `energy -= 10`
+   * Sleep → pet sleeps for **2 minutes**, cannot interact while sleeping
+     * When waking up: `energy += 30`
+
+   **Stat Decay** (every minute while not sleeping):
+   * `hunger -= 1`
+   * `happiness -= 1`
+   * `energy -= 1`
+
+   **Initial Stats**: All stats start at 50 when pet is created.
 
 4. **Pet Evolution**
 
-   * If all stats stay above 70 for 24 hours → pet evolves into a cooler sprite.
+   * If all stats stay above 50 for 5 minutes → pet evolves into a cooler sprite.
 
 5. **Persistence**
 
@@ -150,6 +156,12 @@ The app should feel playful, minimalistic, and fun.
        └── js/pet.js
    ```
 
+4. **Routes __init__.py must export all routers**:
+   ```python
+   # app/routes/__init__.py
+   from . import auth, pets, pages
+   ```
+
 ---
 
 ## **Database**
@@ -158,10 +170,40 @@ Use **SQLite** with SQLAlchemy ORM.
 
 Tables:
 
-| Table | Fields                                                                   |
-| ----- | ------------------------------------------------------------------------ |
-| users | id, email, password_hash, created_at                                     |
-| pets  | id, user_id, name, species, hunger, happiness, energy, stage, updated_at |
+| Table | Fields |
+| ----- | ------ |
+| users | id, email, password_hash, created_at |
+| pets  | id, user_id, name, species, hunger, happiness, energy, stage, is_sleeping, sleep_until, last_decay, evolution_eligible_since, created_at, updated_at |
+
+### **Pet Model Details**
+
+```python
+class Pet(Base):
+    __tablename__ = "pets"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"), unique=True)  # One pet per user
+    name = Column(String, nullable=False)
+    species = Column(String, nullable=False)  # otter, cat, dragon, axolotl
+
+    # Stats (0-100)
+    hunger = Column(Integer, default=50)
+    happiness = Column(Integer, default=50)
+    energy = Column(Integer, default=50)
+
+    # Evolution
+    stage = Column(String, default="baby")  # "baby" or "evolved"
+    evolution_eligible_since = Column(DateTime, nullable=True)
+
+    # Sleep
+    is_sleeping = Column(Boolean, default=False)
+    sleep_until = Column(DateTime, nullable=True)
+
+    # Timestamps
+    last_decay = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+```
 
 ---
 
@@ -208,7 +250,32 @@ Tests should run with an in-memory DB.
   token = jwt.encode({"user_id": 1}, "secret", algorithm="HS256")
   payload = jwt.decode(token, "secret", algorithms=["HS256"])
   ```
-* For password hashing, use `passlib` with bcrypt.
+* For password hashing, use simple SHA256 with salt (hashlib) - avoids bcrypt compilation issues:
+  ```python
+  import hashlib, secrets
+  salt = secrets.token_hex(16)
+  hashed = hashlib.sha256(f"{password}{salt}".encode()).hexdigest()
+  stored = f"{salt}:{hashed}"
+  ```
+
+---
+
+## **Required Dependencies**
+
+Create a `requirements.txt` in the workspace with:
+```
+fastapi>=0.100.0
+uvicorn>=0.20.0
+sqlalchemy>=2.0.0
+PyJWT>=2.0.0
+jinja2>=3.0.0
+python-multipart>=0.0.5
+httpx>=0.24.0
+pytest>=7.0.0
+pytest-asyncio>=0.20.0
+```
+
+**Note**: `python-multipart` is REQUIRED for FastAPI Form() to work.
 
 ---
 
