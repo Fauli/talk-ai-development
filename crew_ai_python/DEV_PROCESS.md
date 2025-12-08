@@ -128,7 +128,7 @@ Once the crew completes successfully, the PixelPet app is in `workspace/`. To ru
 cd crew_ai_python/workspace
 
 # Install app dependencies (if requirements.txt exists)
-pip install fastapi uvicorn sqlalchemy jinja2 python-multipart jose
+pip install fastapi uvicorn sqlalchemy jinja2 python-multipart
 
 # Run the FastAPI server
 uvicorn app.main:app --reload --port 1337

@@ -37,6 +37,16 @@ class PytestInput(BaseModel):
     extra_args: str = Field(default="", description="Extra pytest arguments")
 
 
+class PipInstallInput(BaseModel):
+    """Input schema for pip install."""
+    packages: str = Field(description="Space-separated list of packages to install, e.g. 'fastapi uvicorn'")
+
+
+class ShellCommandInput(BaseModel):
+    """Input schema for shell commands."""
+    command: str = Field(description="Shell command to run in the workspace directory")
+
+
 class ReadSpecsTool(BaseTool):
     name: str = "read_specs"
     description: str = (
@@ -127,8 +137,9 @@ class RunPytestTool(BaseTool):
     args_schema: Type[BaseModel] = PytestInput
 
     def _run(self, extra_args: str = "") -> str:
+        import sys
         _ensure_workspace()
-        cmd = ["pytest"]
+        cmd = [sys.executable, "-m", "pytest"]
         if extra_args:
             cmd.extend(extra_args.split())
 
@@ -138,12 +149,14 @@ class RunPytestTool(BaseTool):
                 cwd=WORKSPACE_ROOT,
                 capture_output=True,
                 text=True,
+                timeout=120,
             )
         except FileNotFoundError:
             return (
-                "ERROR: pytest command not found. Please ensure pytest is installed "
-                "in the current Python environment."
+                "ERROR: Python executable not found."
             )
+        except subprocess.TimeoutExpired:
+            return "ERROR: pytest timed out after 120 seconds."
 
         return (
             f"COMMAND: {' '.join(cmd)}\n"
@@ -151,6 +164,99 @@ class RunPytestTool(BaseTool):
             f"STDOUT:\n{proc.stdout}\n"
             f"STDERR:\n{proc.stderr}"
         )
+
+
+class PipInstallTool(BaseTool):
+    name: str = "pip_install"
+    description: str = (
+        "Install Python packages using pip. Use this to install dependencies needed "
+        "by the application, such as 'fastapi uvicorn sqlalchemy PyJWT passlib bcrypt'. "
+        "Input should be a space-separated list of package names."
+    )
+    args_schema: Type[BaseModel] = PipInstallInput
+
+    def _run(self, packages: str) -> str:
+        import sys
+        if not packages.strip():
+            return "Error: No packages specified."
+
+        cmd = [sys.executable, "-m", "pip", "install"] + packages.split()
+        try:
+            proc = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                timeout=120,
+            )
+        except FileNotFoundError:
+            return "ERROR: Python executable not found."
+        except subprocess.TimeoutExpired:
+            return "ERROR: pip install timed out after 120 seconds."
+
+        return (
+            f"COMMAND: {' '.join(cmd)}\n"
+            f"RETURN CODE: {proc.returncode}\n"
+            f"STDOUT:\n{proc.stdout}\n"
+            f"STDERR:\n{proc.stderr}"
+        )
+
+
+class RunShellTool(BaseTool):
+    name: str = "run_shell"
+    description: str = (
+        "Run a shell command in the workspace directory. Use this for tasks that "
+        "don't have a dedicated tool, like creating directories, removing files, "
+        "or checking system state. Be careful with destructive commands."
+    )
+    args_schema: Type[BaseModel] = ShellCommandInput
+
+    def _run(self, command: str) -> str:
+        _ensure_workspace()
+        if not command.strip():
+            return "Error: No command specified."
+
+        try:
+            proc = subprocess.run(
+                command,
+                shell=True,
+                cwd=WORKSPACE_ROOT,
+                capture_output=True,
+                text=True,
+                timeout=60,
+            )
+        except subprocess.TimeoutExpired:
+            return "ERROR: Command timed out after 60 seconds."
+
+        return (
+            f"COMMAND: {command}\n"
+            f"RETURN CODE: {proc.returncode}\n"
+            f"STDOUT:\n{proc.stdout}\n"
+            f"STDERR:\n{proc.stderr}"
+        )
+
+
+class ListPackagesTool(BaseTool):
+    name: str = "list_packages"
+    description: str = (
+        "List installed Python packages. Use this to check if required dependencies "
+        "are installed before running tests or the app."
+    )
+    args_schema: Type[BaseModel] = EmptyInput
+
+    def _run(self) -> str:
+        import sys
+        cmd = [sys.executable, "-m", "pip", "list", "--format=columns"]
+        try:
+            proc = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+        except subprocess.TimeoutExpired:
+            return "ERROR: pip list timed out."
+
+        return proc.stdout if proc.returncode == 0 else f"ERROR:\n{proc.stderr}"
 
 
 class RunAppTool(BaseTool):
@@ -207,5 +313,8 @@ def get_all_tools():
         WriteFileTool(),
         ListFilesTool(),
         RunPytestTool(),
+        PipInstallTool(),
+        ListPackagesTool(),
+        RunShellTool(),
         RunAppTool(),
     ]
