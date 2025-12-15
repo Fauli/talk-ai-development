@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}My Pet - PixelPet{% endblock %}
+
+{% block content %}
+{% if not pet %}
+    <div class="no-pet">
+        <h2>🐾 Adopt Your First Pet!</h2>
+        <p>Choose a species and give your new companion a name.</p>
+        
+        <form id="create-pet-form" class="pet-creation">
+            <div class="form-group">
+                <label for="pet-name">Pet Name:</label>
+                <input type="text" id="pet-name" name="name" required maxlength="50" placeholder="Enter a cute name...">
+            </div>
+            
+            <div class="form-group">
+                <label>Choose Species:</label>
+                <div class="species-grid">
+                    {% for species in valid_species %}
+                    <label class="species-option">
+                        <input type="radio" name="species" value="{{ species }}" required>
+                        <div class="species-card">
+                            {% if species == 'otter' %}
+                                <div class="species-sprite">🦦</div>
+                            {% elif species == 'cat' %}
+                                <div class="species-sprite">🐱</div>
+                            {% elif species == 'dragon' %}
+                                <div class="species-sprite">🐉</div>
+                            {% elif species == 'axolotl' %}
+                                <div class="species-sprite">🦎</div>
+                            {% endif %}
+                            <p>{{ species.title() }}</p>
+                        </div>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Adopt Pet</button>
+        </form>
+    </div>
+{% else %}
+    <div class="pet-game">
+        <div class="pet-display">
+            <div class="pet-info">
+                <h2>{{ pet.name }}</h2>
+                <p class="pet-species">{{ pet.species.title() }} • {{ pet.stage.title() }}</p>
+                {% if pet.can_evolve %}
+                    <p class="evolution-ready">✨ Ready to evolve!</p>
+                {% endif %}
+            </div>
+            
+            <div class="pet-sprite-container">
+                {% if pet.species == 'otter' %}
+                    <div class="pet-sprite {{ 'sleeping' if not pet.is_awake else '' }}">{{ '🦦' if pet.stage == 'baby' else '🦦' }}</div>
+                {% elif pet.species == 'cat' %}
+                    <div class="pet-sprite {{ 'sleeping' if not pet.is_awake else '' }}">{{ '🐱' if pet.stage == 'baby' else '🐈' }}</div>
+                {% elif pet.species == 'dragon' %}
+                    <div class="pet-sprite {{ 'sleeping' if not pet.is_awake else '' }}">{{ '🐲' if pet.stage == 'baby' else '🐉' }}</div>
+                {% elif pet.species == 'axolotl' %}
+                    <div class="pet-sprite {{ 'sleeping' if not pet.is_awake else '' }}">{{ '🦎' if pet.stage == 'baby' else '🦖' }}</div>
+                {% endif %}
+                
+                {% if not pet.is_awake %}
+                    <div class="sleep-indicator">💤</div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="pet-stats">
+            <div class="stat">
+                <label>Hunger</label>
+                <div class="stat-bar">
+                    <div class="stat-fill hunger" style="width: {{ pet.hunger }}%"></div>
+                </div>
+                <span class="stat-value">{{ pet.hunger }}/100</span>
+            </div>
+            
+            <div class="stat">
+                <label>Happiness</label>
+                <div class="stat-bar">
+                    <div class="stat-fill happiness" style="width: {{ pet.happiness }}%"></div>
+                </div>
+                <span class="stat-value">{{ pet.happiness }}/100</span>
+            </div>
+            
+            <div class="stat">
+                <label>Energy</label>
+                <div class="stat-bar">
+                    <div class="stat-fill energy" style="width: {{ pet.energy }}%"></div>
+                </div>
+                <span class="stat-value">{{ pet.energy }}/100</span>
+            </div>
+        </div>
+        
+        <div class="pet-actions">
+            <button id="feed-btn" class="action-btn feed" {{ 'disabled' if not pet.is_awake }} onclick="feedPet()">
+                🍎 Feed
+            </button>
+            
+            <button id="play-btn" class="action-btn play" {{ 'disabled' if not pet.is_awake }} onclick="playWithPet()">
+                🎾 Play
+            </button>
+            
+            <button id="sleep-btn" class="action-btn sleep" {{ 'disabled' if not pet.is_awake }} onclick="putPetToSleep()">
+                😴 Sleep
+            </button>
+            
+            {% if pet.can_evolve %}
+            <button id="evolve-btn" class="action-btn evolve" onclick="evolvePet()">
+                ✨ Evolve
+            </button>
+            {% endif %}
+        </div>
+        
+        {% if not pet.is_awake and pet.sleep_until %}
+        <div class="sleep-status">
+            <p>💤 Your pet is sleeping until <span id="wake-time">{{ pet.sleep_until }}</span></p>
+        </div>
+        {% endif %}
+    </div>
+    
+    <div id="notification" class="notification hidden"></div>
+{% endif %}
+
+<script>
+// Store pet data for JavaScript
+window.petData = {{ pet | tojson if pet else 'null' }};
+</script>
+{% endblock %}

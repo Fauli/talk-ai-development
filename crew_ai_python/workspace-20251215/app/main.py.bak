@@ -1,0 +1,74 @@
+"""Main FastAPI application for PixelPet."""
+import logging
+import os
+from contextlib import asynccontextmanager
+from pathlib import Path
+
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+
+from .database import create_tables
+from .scheduler import start_scheduler, stop_scheduler
+from .routes import auth, pets, pages
+
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Application lifespan events."""
+    # Startup
+    logger.info("Starting PixelPet application...")
+    
+    # Create database tables
+    create_tables()
+    logger.info("Database tables created")
+    
+    # Start background scheduler
+    start_scheduler()
+    logger.info("Background scheduler started")
+    
+    yield
+    
+    # Shutdown
+    logger.info("Shutting down PixelPet application...")
+    stop_scheduler()
+    logger.info("Background scheduler stopped")
+
+
+# Create FastAPI app
+app = FastAPI(
+    title="PixelPet",
+    description="A virtual pet web application",
+    version="1.0.0",
+    lifespan=lifespan
+)
+
+# Get the absolute path to the static directory
+static_dir = Path(__file__).parent / "static"
+if static_dir.exists():
+    # Mount static files
+    app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
+    logger.info(f"Static files mounted from {static_dir}")
+else:
+    logger.warning(f"Static directory not found at {static_dir}")
+
+# Include routers - pages router FIRST for HTML route precedence
+app.include_router(pages.router)
+app.include_router(auth.router)
+app.include_router(pets.router)
+
+
+@app.get("/health")
+async def health_check():
+    """Health check endpoint."""
+    return {"status": "healthy", "service": "PixelPet"}
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to PixelPet{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <div class="hero-content">
+        <h1 class="hero-title">🐾 Welcome to PixelPet!</h1>
+        <p class="hero-subtitle">Adopt and care for your very own virtual pixel pet</p>
+        
+        <div class="hero-features">
+            <div class="feature">
+                <div class="feature-icon">🍎</div>
+                <h3>Feed Your Pet</h3>
+                <p>Keep your pet well-fed and happy</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">🎾</div>
+                <h3>Play Together</h3>
+                <p>Play games to boost happiness</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">😴</div>
+                <h3>Rest & Sleep</h3>
+                <p>Let your pet rest to restore energy</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">✨</div>
+                <h3>Watch Them Evolve</h3>
+                <p>Care for your pet and see them grow!</p>
+            </div>
+        </div>
+        
+        <div class="hero-actions">
+            <a href="/login" class="btn btn-primary">Get Started</a>
+            <p class="login-hint">Already have a pet? <a href="/login">Login here</a></p>
+        </div>
+    </div>
+    
+    <div class="hero-pets">
+        <div class="pet-preview">
+            <div class="pet-sprite">🦦</div>
+            <p>Otter</p>
+        </div>
+        <div class="pet-preview">
+            <div class="pet-sprite">🐱</div>
+            <p>Cat</p>
+        </div>
+        <div class="pet-preview">
+            <div class="pet-sprite">🐉</div>
+            <p>Dragon</p>
+        </div>
+        <div class="pet-preview">
+            <div class="pet-sprite">🦎</div>
+            <p>Axolotl</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
