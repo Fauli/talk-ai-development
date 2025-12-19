@@ -3,15 +3,19 @@
 
 *the good, the bad and the ugly*
 
-Notes: Today I want to talk about what people call vibe coding. I.e. maybe those not aware of that, it's coding only using LLMs.
-You can already use LLMs to support you in coding, but with vibe coding you let the machine do all of it.
-There is a big difference in what people think of it. some like it (you can build a complex machine in 2 hours), some hate it.
+Notes: Heute möchte ich über etwas sprechen, das viele „Vibe Coding“ nennen.
+Für alle, die den Begriff noch nicht kennen: Gemeint ist Programmieren ausschließlich mit Hilfe von LLMs.
+
+Wir nutzen LLMs heute bereits, um uns beim Programmieren zu unterstützen. Beim Vibe Coding geht man aber einen Schritt weiter – man überlässt der Maschine praktisch die gesamte Arbeit.
+
+Die Meinungen dazu gehen stark auseinander. Manche finden es großartig, weil man in kurzer Zeit sehr komplexe Systeme bauen kann. Andere lehnen es komplett ab, weil man die kontroller verliert oder ds debugging sehr schwer sein kann.
+
 ---
 
 ## me.introduce()
 
 - Franz Faul, ZKB, ehem ZHAWler
-- Mache vieles mit KI-gestützter und agentischer Entwicklung
+- Mache vieles mit AI-gestützter und agentischer Entwicklung
 - Interessiert, wie sich Softwareentwicklung verändert
 - https://github.com/fauli
 ---
@@ -42,30 +46,31 @@ Programmierung wird immer **abstrakter**:
 - Maschinencode → Assembler
 - C → Java → Frameworks
 - Cloud → Container → DevOps
-- KI-gestützte Programmierung
+- AI-gestützte Programmierung
 
 🧠 Jeder Schritt entfernt uns von Syntax hin zu Ideen.
 
-Notes: Every abstraction shift wasn’t made because computers needed it — it was made because humans did.
-“Assembly didn’t replace machine code because CPUs couldn’t handle bits anymore.
-It replaced it because humans couldn’t reason about thousands of opcodes.”
+Notes: Jeder Abstraktionssprung ist nicht entstanden, weil Computer ihn gebraucht hätten – sondern weil Menschen ihn gebraucht haben.
 
-“C didn’t exist because machines needed functions and structs.
-It existed because humans needed names, boundaries, and mental models.”
+„Assembler hat Maschinencode nicht ersetzt, weil CPUs plötzlich keine Bits mehr verarbeiten konnten.
+Er hat ihn ersetzt, weil Menschen nicht mehr über Tausende von Opcodes nachdenken konnten.“
 
-“Frameworks didn’t appear because computers demanded them.
-They appeared because software complexity exceeded what one brain could hold.”
+„C entstand nicht, weil Maschinen Funktionen und Strukturen gebraucht hätten.
+Es entstand, weil Menschen Namen, Grenzen und mentale Modelle brauchten.“
 
-Programming languages are tools for thought, not instructions for machines.
+„Frameworks sind nicht entstanden, weil Computer sie verlangt haben.
+Sie sind entstanden, weil die Komplexität von Software das überstiegen hat, was ein einzelnes Gehirn erfassen kann.“
 
-Then expand verbally:
+Programmiersprachen sind Werkzeuge für das Denken – nicht Anweisungen für Maschinen.
+...
+„Sie prägen, wie wir denken, wie wir über Systeme nachdenken und wie wir zusammenarbeiten –
+die Maschine ist am Ende nur der letzte Abnehmer.“
 
-“They shape how we think, how we reason about systems, how we collaborate —
-the machine is just the final consumer.”“Every abstraction layer moved us closer to expressing what we want,
-instead of how the machine must do it.”
+„Jede neue Abstraktionsebene hat uns näher daran gebracht, auszudrücken was wir wollen,
+statt wie die Maschine es im Detail tun muss.“
 
-“That doesn’t eliminate programming —
-it moves programming to a higher cognitive level.”
+„Das bedeutet nicht, dass Programmieren verschwindet –
+es verschiebt sich auf eine höhere kognitive Ebene.“
 
 ---
 
@@ -79,42 +84,38 @@ it moves programming to a higher cognitive level.”
 
 🔥 Heute befinden wir uns im Übergang von 2.0 → 3.0.
 
-Notes: Software 1.0 — Humans write rules (very familiar)
-“If the temperature is above 30 degrees, turn on the fan.
-If it’s below 20, turn it off.”
+Notes: Software 1.0 — Menschen schreiben Regeln (sehr vertraut)
+„Wenn die Temperatur über 30 Grad liegt, schalte den Ventilator ein.
+Wenn sie unter 20 Grad fällt, schalte ihn aus.“
 
-Software 2.0 — Humans don’t write rules, they provide examples
-“Think of image recognition:
-You don’t write rules like
-‘if pixel X is darker than pixel Y…’
-You show thousands of images and say:
-‘This is a cat. This is not.’”
+Software 2.0 — Menschen schreiben keine Regeln mehr, sie geben Beispiele
+„Denkt zum Beispiel an Bilderkennung: Man schreibt keine Regeln wie
+›Wenn Pixel X dunkler ist als Pixel Y …‹
+Stattdessen zeigt man tausende Bilder und sagt: ›Das ist eine Katze. Das ist keine.‹“
 
-Key mental shift:
+Zentrale gedankliche Veränderung
+„Das ‚Programm‘ steht nicht mehr im Code – es steckt in den Gewichten des Modells.“
 
-“The ‘program’ is no longer written in code —
-it’s stored in model weights.”
+Software 3.0 — Menschen beschreiben Ziele, Systeme erledigen den Rest
+„Baue mir einen Service, der X macht, diese Randbedingungen einhält und über längere Zeit zuverlässig funktioniert.“
 
-Software 3.0 — Humans describe outcomes, systems handle the rest
-‘Build me a service that does X, follows these constraints, and keeps working over time.’”
+Wichtiger Merksatz (mehrmals wiederholen)
+Intention statt Instruktionen.
 
-Key phrase to repeat:
+Wichtige Einordnung
+„Wir sind noch nicht vollständig in Software 3.0 angekommen.“
 
-Intent instead of instructions.
+Zusammenfassung
+Software 1.0 → wir schreiben Anweisungen
+Software 2.0 → wir liefern Beispiele
+Software 3.0 → wir beschreiben gewünschte Ergebnisse
 
-!!!“We are not fully in Software 3.0 yet.”
-
-“So:
-
-Software 1.0 → we write instructions
-
-Software 2.0 → we give examples
-
-Software 3.0 → we describe outcomes”
+Und genau an dieser Stelle kommen agentische Systeme ins Spiel –
+denn sie sind der erste ernsthafte Versuch, Software wirklich auf Intentionen aufzubauen.
 
 ---
 
-## Warum KI für Code?
+## Warum AI für Code?
 
 Code ist:
 
@@ -125,7 +126,11 @@ Code ist:
 
 Perfektes Lernmaterial für grosse Sprachmodelle.
 
-Notes: "Large language models work surprisingly well for programming because code follows rules and patterns. Unlike natural language, most code has clear structure, consistent syntax, and exists in huge public repositories like GitHub. That makes it ideal training material."
+Notes: Grosse Sprachmodelle funktionieren überraschend gut beim Programmieren, weil Code klaren Regeln und Mustern folgt.
+
+Im Gegensatz zur natürlichen Sprache hat Code meist eine eindeutige Struktur, eine konsistente Syntax und existiert in riesigen öffentlichen Repositories wie GitHub.
+
+Das macht ihn zu idealem Trainingsmaterial.
 ---
 
 ## Zeitstrahl: Wie wir hierher kamen
@@ -133,15 +138,23 @@ Notes: "Large language models work surprisingly well for programming because cod
 - 2010–2018 → Deep Learning Boom
 - 2020 → GPT-3: erstes grosses allgemeines Sprachmodell
 - 2022 → ChatGPT verleiht Coding-Superkräfte
-- 2023–2025 → Agentische KI erscheint (AutoGPT, Devin, CrewAI)
+- 2023–2025 → Agentische AI erscheint (AutoGPT, Devin, CrewAI)
 
-Notes: The first wave of modern AI focused mainly on perception — systems that could see and hear. This includes image recognition, object detection, and speech-to-text. These models were very good at answering “What is this?” but not “What should I do about it?” They replaced human senses, but not human decision-making.
+Notes: Die erste Welle moderner AI konzentrierte sich hauptsächlich auf Wahrnehmung — Systeme, die sehen und hören konnten.
+Dazu gehören Bilderkennung, Objekterkennung und Speech-to-Text.
+Diese Modelle waren sehr gut darin, die Frage „Was ist das?“ zu beantworten, aber nicht „Was soll ich damit tun?“.
+Sie ersetzten menschliche Sinne, aber nicht menschliche Entscheidungsfindung.
 
-The second wave moved into language understanding. Models could process text, classify it, translate it, summarize it, and answer questions. This already felt more intelligent, but these systems were still mostly reactive — they responded to input, but they didn’t plan or act on their own.
+Die zweite Welle verlagerte sich auf Sprachverständnis.
+Modelle konnten Texte verarbeiten, klassifizieren, übersetzen, zusammenfassen und Fragen beantworten.
+Das fühlte sich bereits intelligenter an, aber diese Systeme waren größtenteils reaktiv — sie reagierten auf Eingaben, planten jedoch nicht selbst und handelten nicht eigenständig.
 
-Around 2022, with systems like ChatGPT, we crossed an important threshold: models began to show reasoning-like behavior. They could follow multi-step instructions, explain their thinking, write code, and combine knowledge across domains. This didn’t mean they truly “think,” but it made them useful for complex cognitive tasks.
+Etwa ab 2022, mit Systemen wie ChatGPT, überschritten wir eine wichtige Schwelle: Modelle begannen, ein reasoning-ähnliches Verhalten zu zeigen.
+Sie konnten mehrstufige Anweisungen befolgen, ihr Vorgehen erklären, Code schreiben und Wissen aus verschiedenen Bereichen kombinieren.
+Das bedeutete nicht, dass sie wirklich „denken“, aber es machte sie nützlich für komplexe kognitive Aufgaben.
 
-Only very recently did models gain the ability to use tools and interact with external environments — calling APIs, running code, reading files, or observing system state. This is the key shift that unlocked agentic workflows: AI systems that can plan, act, observe results, and adapt over multiple steps toward a goal.
+Erst ganz kürzlich erhielten Modelle die Fähigkeit, Werkzeuge zu nutzen und mit externen Umgebungen zu interagieren — etwa APIs aufzurufen, Code auszuführen, Dateien zu lesen oder den Zustand eines Systems zu beobachten.
+Das ist der entscheidende Wandel, der agentische Workflows ermöglicht hat: AI-Systeme, die planen, handeln, Ergebnisse beobachten und ihr Verhalten über mehrere Schritte hinweg an ein Ziel anpassen.
 
 ---
 
@@ -163,7 +176,8 @@ Es lernt aus:
 
 ⚙️ Kein menschliches Denken — aber mächtige Mustersynthese.
 
-Notes: "A large language model is essentially next-token prediction at scale. It doesn’t ‘think’ like a human, but because it’s trained on huge datasets — including code — it can synthesize patterns and produce results that feel intelligent."
+Notes: Ein grosses Sprachmodell ist im Kern eine Next-Token-Vorhersage im großen Massstab.
+Es „denkt“ nicht wie ein Mensch, aber weil es auf riesigen Datensätzen trainiert wurde — einschlieslich Code — kann es Muster synthetisieren und Ergebnisse erzeugen, die intelligent wirken.
 
 ---
 
@@ -182,7 +196,9 @@ Sie können:
 
 👉 Immer noch **reaktiv** — du fragst, es antwortet.
 
-Notes: "Coding assistants like Copilot or ChatGPT are essentially turbocharged autocomplete. They help with syntax, boilerplate, and understanding unfamiliar APIs. They're incredibly useful — but they still rely on us giving explicit instructions."
+Notes: Coding-Assistenten wie Copilot oder ChatGPT sind im Grunde stark beschleunigte Autovervollständigung.
+Sie helfen bei Syntax, Boilerplate-Code und beim Verstehen unbekannter APIs.
+Sie sind unglaublich nützlich — aber sie sind immer noch darauf angewiesen, dass wir ihnen explizite Anweisungen geben.
 
 ---
 
@@ -200,13 +216,15 @@ Neuer Weg:
 
 ```
 
-Absicht beschreiben → KI entwirft → Du prüfst → iterieren
+Absicht beschreiben → AI entwirft → Du prüfst → iterieren
 
 ```
 
 Du wechselst vom **Code tippen** zum **über Code nachdenken**.
 
-Notes: "AI begins to change the developer workflow. Instead of starting from an empty file, you might start by describing the architecture, behaviors, or constraints — and let the AI scaffold code. Your job shifts more toward reviewing, refining, and reasoning rather than typing syntax."
+Notes: AI beginnt, den Entwickler-Workflow zu verändern.
+Anstatt mit einer leeren Datei zu starten, beginnt man damit, Architektur, Verhalten oder Randbedingungen zu beschreiben — und lässt die AI den Code vorbereiten.
+Die eigene Aufgabe verschiebt sich stärker hin zu Review, Verfeinerung und Nachdenken, statt Syntax zu tippen.
 
 ---
 
@@ -215,35 +233,38 @@ Notes: "AI begins to change the developer workflow. Instead of starting from an 
 
 ---
 
-## Was ist ein KI-Agent?
+## Was ist ein AI-Agent?
 
-> **Ein Agent ist ein KI-System, das ein Ziel autonom verfolgen kann, indem es Werkzeuge, Gedächtnis und Feedback-Schleifen nutzt.**
+> **Ein Agent ist ein AI-System, das ein Ziel autonom verfolgen kann, indem es Werkzeuge, Gedächtnis und Feedback-Schleifen nutzt.**
 
 Im Gegensatz zu Assistenten können Agenten:
 
 *Planen, Ausführen, Beobachten und bewerten, Iterieren*
 
-Notes: "A key shift is from AI assistants to AI agents. An assistant answers. An agent pursues a goal. It can plan steps, run tools, check results, and iterate — much closer to how a junior engineer would work."
+Notes: Ein zentraler Wandel ist der Schritt von AI-Assistenten zu AI-Agenten.
+Ein Assistent beantwortet Fragen. Ein Agent verfolgt ein Ziel.
 
-IMPORTANT: it should NOT replace a junior engineer.
+Er kann Schritte planen, Werkzeuge ausführen, Ergebnisse überprüfen und iterieren — also deutlich näher an der Arbeitsweise eines "Junior Engineers".
+
+Wichtig: Ein AI-Agent soll keinen Junior Engineer ersetzen.
 
 Explain explicitly:
 
-“A junior engineer is trusted with:
+A junior engineer is trusted with:
 - understanding context
 - making judgment calls
-- taking responsibility for outcomes”
+- taking responsibility for outcomes
 
 Then contrast:
 
-“An AI agent:
+An AI agent:
 - does not understand business impact
 - does not know when something ‘feels wrong’
-- cannot be accountable”
+- cannot be accountable
 
-Strong sentence:
-- Responsibility cannot be automated.
-
+Fazit
+- Verantwortung lässt sich nicht automatisieren.
+- Echtes Verständnis von „Business Requirements“ lässt sich nicht automatisieren.
 ---
 
 ## Assistent vs Agent
@@ -286,9 +307,15 @@ At the same time, this loop is also where things can go wrong. Agents can get st
 - 🧰 **Werkzeug-Schicht** (Dateisystem, CLI, Browser, APIs)
 - 🗂️ **Orchestrierungs-Framework** (LangChain, CrewAI, ReAct)
 
-Notes: Under the hood, an agent is not just a language model. The LLM is important, but it’s only one part of the system. Around it, there’s a memory component to store context and past decisions, a set of tools the agent can invoke, and an orchestration layer that decides what happens next.
+Notes: Unter der Haube ist ein Agent nicht einfach nur ein Sprachmodell.
+Das LLM ist wichtig, aber es ist nur ein Teil des Systems.
 
-Taken together, this means an agent is really an ecosystem, not a single model. The intelligence comes from how these pieces work together — not from the model alone.
+Darum herum gibt es eine Speicherkomponente, um Kontext und frühere Entscheidungen abzulegen, eine Reihe von Werkzeugen, die der Agent aufrufen kann, und eine Orchestrierungsschicht, die entscheidet, was als Nächstes passiert.
+
+Insgesamt bedeutet das:
+Ein Agent ist eigentlich ein Ökosystem, kein einzelnes Modell.
+
+Die Intelligenz entsteht aus dem Zusammenspiel dieser Komponenten — nicht aus dem Modell allein.
 
 ---
 
@@ -310,9 +337,9 @@ Note: Switch to CrewAI example!
 
 ---
 
-## "KI-Software-Ingenieur" Beispiele
+## "A-Software-Ingenieur" Beispiele
 
-"Fähigkeiten":
+Fähigkeiten:
 
 - Ein Repository verstehen
 - Features planen
@@ -320,7 +347,7 @@ Note: Switch to CrewAI example!
 - Tests ausführen
 - Pull Requests erstellen
 
-👉 Erfordert immer noch menschliche Überprüfung — denkt an **Praktikant**, nicht Senior-Entwickler.
+Erfordert immer noch menschliche Überprüfung!
 
 ---
 
@@ -355,10 +382,7 @@ Note: Switch to CrewAI example!
 
 ---
 
-## Hinterfragen
-
 ![always-right](assets/absolutely-right.jpg)
-
 
 ---
 
@@ -372,13 +396,18 @@ Ihr seid weiterhin verantwortlich für:
 - Produktionsqualität
 - Ethik & Sicherheit
 
-👩‍💻 Agenten beschleunigen **Engineering** — sie ersetzen es nicht.
+Agenten beschleunigen **Engineering** — sie ersetzen es nicht.
 
 Notes:
-Don't tell the model, write me an app that does X.
-Better to do it in steps (create SPECS.md), then agents that you can use. etc. but one after the other, KEEP IN THE LOOP.
+„Schreib mir eine App, die X macht.“
 
-Also tell it to look up how you do things nowadays.
+Besser ist es, schrittweise vorzugehen:
+zuerst Spezifikationen erstellen (zum Beispiel eine SPECS.md),
+dann gezielt Agenten einsetzen —
+aber nacheinander, nicht alles auf einmal,
+und immer selbst im Loop bleiben.
+
+Sag dem Modell ausserdem explizit, dass es nachschauen soll, wie Dinge heute umgesetzt werden, ggf. mit dem aktuellen Jahr.
 
 ---
 
@@ -392,7 +421,26 @@ Also tell it to look up how you do things nowadays.
 - Repository-bewusste Agenten
 - Kontinuierlich selbstwartende Codebasen
 - Multi-Agenten-Teams (Architekt + Coder + Tester)
-- Mehr "Vibe Coding" — beschreibe das *Gefühl*, nicht die Syntax
+- "Vibe Coding" — beschreibe das *Gefühl*, nicht die Syntax
+- Englisch als meist genutze Programmiersprache? 😜
+
+Notes: „Deine IDE wird zum Teammitglied“
+
+- Aufgaben schreiben, nicht Funktionen
+- Feedback entwerfen, nicht Outputs
+- Logs lesen statt Stacktraces
+- Verhalten debuggen, nicht Syntax
+
+„Man debuggt keinen Code mehr — man debuggt Intention.“
+.....
+Warum das für Junior Developers eigentlich grossartig ist
+
+- Syntax ist weniger wichtig
+- Denken ist wichtiger
+- Systeme zu verstehen ist am wichtigsten
+
+„AI ersetzt keine Junior Devs.
+Sie ersetzt das Festhängen an Syntax.“
 
 ---
 
@@ -404,7 +452,10 @@ Also tell it to look up how you do things nowadays.
 - Absichten klar kommunizieren
 - Trade-offs & Architektur verstehen
 
-KI schreibt schneller — aber *ihr* entscheidet, **was geschrieben werden soll.**
+AI schreibt schneller — aber *ihr* entscheidet, **was geschrieben werden soll.**
+
+Notes:Die Zukunft des Programmierens besteht nicht darin, Computern exakt zu sagen, was sie tun sollen —
+sondern Systeme zu lehren, wie sie Entscheidungen treffen und deinen Prozess unterstützen.
 
 ---
 
