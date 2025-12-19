@@ -26,6 +26,10 @@ There is a big difference in what people think of it. some like it (you can buil
 
 ---
 
+![vibe-errors](assets/vibe-errors.png)
+
+---
+
 # Teil 1
 ## time.rewind()
 
@@ -317,6 +321,10 @@ Note: Switch to CrewAI example!
 - Pull Requests erstellen
 
 👉 Erfordert immer noch menschliche Überprüfung — denkt an **Praktikant**, nicht Senior-Entwickler.
+
+---
+
+![why-works](./assets/no-idea.png)
 
 ---
 
