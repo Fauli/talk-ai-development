@@ -3,7 +3,7 @@
 # Presentation runner using reveal-md
 # Usage: ./run.sh [presentation.md]
 
-PRESENTATION="${1:-presentation.md}"
+PRESENTATION="${1:-presentation-german.md}"
 THEME="theme-programmy.css"
 
 # Check if reveal-md is installed
