@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}PixelPet - {{ pet.name if pet else 'Adopt a Pet' }}{% endblock %}
+
+{% block content %}
+<div class="game-container">
+    {% if not pet %}
+    <!-- Pet Creation Form -->
+    <div class="create-pet-container">
+        <h2>Adopt Your Pet!</h2>
+        <p>Choose a species and give your new friend a name.</p>
+
+        <form id="create-pet-form" class="create-pet-form">
+            <div class="form-group">
+                <label for="pet-name">Pet Name</label>
+                <input type="text" id="pet-name" name="name" required maxlength="20">
+            </div>
+
+            <div class="form-group">
+                <label>Choose a Species</label>
+                <div class="species-selection">
+                    {% for species in valid_species %}
+                    <label class="species-option">
+                        <input type="radio" name="species" value="{{ species }}" {% if loop.first %}checked{% endif %}>
+                        <span class="species-sprite" data-species="{{ species }}">
+                            {% if species == 'otter' %}🦦{% elif species == 'cat' %}🐱{% elif species == 'dragon' %}🐉{% else %}🦎{% endif %}
+                        </span>
+                        <span class="species-name">{{ species|capitalize }}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Adopt!</button>
+        </form>
+    </div>
+    {% else %}
+    <!-- Pet Display -->
+    <div class="pet-display">
+        <div class="pet-info">
+            <h2>{{ pet.name }}</h2>
+            <p class="pet-species">{{ pet.species|capitalize }} - {{ pet.stage|capitalize }}</p>
+        </div>
+
+        <div class="pet-sprite {% if pet.is_sleeping %}sleeping{% endif %}" id="pet-sprite">
+            {% if pet.species == 'otter' %}
+                {% if pet.stage == 'evolved' %}🦭{% else %}🦦{% endif %}
+            {% elif pet.species == 'cat' %}
+                {% if pet.stage == 'evolved' %}🦁{% else %}🐱{% endif %}
+            {% elif pet.species == 'dragon' %}
+                {% if pet.stage == 'evolved' %}🐲{% else %}🐉{% endif %}
+            {% else %}
+                {% if pet.stage == 'evolved' %}🦖{% else %}🦎{% endif %}
+            {% endif %}
+            {% if pet.is_sleeping %}<span class="zzz">💤</span>{% endif %}
+        </div>
+
+        <!-- Stats Bars -->
+        <div class="stats-container">
+            <div class="stat-bar">
+                <label>🍖 Hunger</label>
+                <div class="bar-container">
+                    <div class="bar hunger-bar" id="hunger-bar" style="width: {{ pet.hunger }}%"></div>
+                </div>
+                <span class="stat-value" id="hunger-value">{{ pet.hunger }}</span>
+            </div>
+
+            <div class="stat-bar">
+                <label>😊 Happiness</label>
+                <div class="bar-container">
+                    <div class="bar happiness-bar" id="happiness-bar" style="width: {{ pet.happiness }}%"></div>
+                </div>
+                <span class="stat-value" id="happiness-value">{{ pet.happiness }}</span>
+            </div>
+
+            <div class="stat-bar">
+                <label>⚡ Energy</label>
+                <div class="bar-container">
+                    <div class="bar energy-bar" id="energy-bar" style="width: {{ pet.energy }}%"></div>
+                </div>
+                <span class="stat-value" id="energy-value">{{ pet.energy }}</span>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-action" id="feed-btn" onclick="performAction('feed')" {% if pet.is_sleeping %}disabled{% endif %}>
+                🍖 Feed
+            </button>
+            <button class="btn btn-action" id="play-btn" onclick="performAction('play')" {% if pet.is_sleeping %}disabled{% endif %}>
+                🎮 Play
+            </button>
+            <button class="btn btn-action" id="sleep-btn" onclick="performAction('sleep')">
+                😴 Sleep
+            </button>
+        </div>
+
+        <!-- Notifications -->
+        <div class="notifications" id="notifications">
+            {% for notification in pet.notifications %}
+            <div class="notification">{{ notification }}</div>
+            {% endfor %}
+        </div>
+
+        <!-- Message Area -->
+        <div class="message-area" id="message-area"></div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/pet.js"></script>
+{% endblock %}

@@ -201,40 +201,6 @@ class PipInstallTool(BaseTool):
         )
 
 
-class RunShellTool(BaseTool):
-    name: str = "run_shell"
-    description: str = (
-        "Run a shell command in the workspace directory. Use this for tasks that "
-        "don't have a dedicated tool, like creating directories, removing files, "
-        "or checking system state. Be careful with destructive commands."
-    )
-    args_schema: Type[BaseModel] = ShellCommandInput
-
-    def _run(self, command: str) -> str:
-        _ensure_workspace()
-        if not command.strip():
-            return "Error: No command specified."
-
-        try:
-            proc = subprocess.run(
-                command,
-                shell=True,
-                cwd=WORKSPACE_ROOT,
-                capture_output=True,
-                text=True,
-                timeout=60,
-            )
-        except subprocess.TimeoutExpired:
-            return "ERROR: Command timed out after 60 seconds."
-
-        return (
-            f"COMMAND: {command}\n"
-            f"RETURN CODE: {proc.returncode}\n"
-            f"STDOUT:\n{proc.stdout}\n"
-            f"STDERR:\n{proc.stderr}"
-        )
-
-
 class ListPackagesTool(BaseTool):
     name: str = "list_packages"
     description: str = (
@@ -315,6 +281,5 @@ def get_all_tools():
         RunPytestTool(),
         PipInstallTool(),
         ListPackagesTool(),
-        RunShellTool(),
         RunAppTool(),
     ]

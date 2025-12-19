@@ -1,16 +1,18 @@
-# **Vibe coding**
-## Wenn Software beginnt, Software zu schreiben
+# **Agentic Programming**
+### Wenn Software beginnt, Software zu schreiben
 
-*the good, the bad and the ugly*
+*Ein Vortrag für neue Programmierer*
 
 ---
 
-## me.introduce()
+## Wer bin ich?
 
-- Franz Faul, ZKB, ehem ZHAWler
+- Franz Faul
 - Mache vieles mit KI-gestützter und agentischer Entwicklung
 - Interessiert, wie sich Softwareentwicklung verändert
-- https://github.com/fauli
+
+👉 Dieser Vortrag gibt euch eine mentale Landkarte des Wandels in der Programmierung.
+
 ---
 
 ## Einstiegsfrage
@@ -26,7 +28,6 @@
 ---
 
 ## Agenda
-*tbd with Merne: yes/no?*
 
 1. 🔙 Geschichte — wie wir hierher kamen
 2. 🧠 LLMs & Coding-Assistenten
@@ -38,7 +39,7 @@
 ---
 
 # Teil 1
-## time.rewind()
+## Wie wir hierher kamen
 
 ---
 
@@ -126,7 +127,7 @@ Sie können:
 
 ---
 
-## Der neue (alte) Workflow
+## Der neue Workflow
 
 Alter Weg:
 
@@ -159,7 +160,10 @@ Du wechselst vom **Code tippen** zum **über Code nachdenken**.
 
 Im Gegensatz zu Assistenten können Agenten:
 
-*Planen, Ausführen, Beobachten und bewerten, Iterieren*
+- Planen
+- Ausführen
+- Beobachten und bewerten
+- Iterieren
 
 ---
 
@@ -175,9 +179,9 @@ Im Gegensatz zu Assistenten können Agenten:
 
 ---
 
-## Let the vibin' begin!
+## Die Agenten-Schleife
 
-1. 🎯 Ziel erhalten
+1. 🎯 Ziel empfangen
 2. 🧩 Schritte planen
 3. 🛠️ Aktionen ausführen
 4. 👀 Ergebnisse beobachten
@@ -213,7 +217,7 @@ Der Bereich entwickelt sich *schnell.*
 
 ## "KI-Software-Ingenieur" Beispiele
 
-"Fähigkeiten":
+Behauptete Fähigkeiten:
 
 - Ein Repository verstehen
 - Features planen
@@ -229,24 +233,27 @@ Der Bereich entwickelt sich *schnell.*
 
 > "Füge Logging zu allen API-Endpunkten hinzu und gib standardisiertes Fehler-JSON zurück."
 
+Agenten-Schritte:
+
 - Scannt Repository
 - Schlägt Plan vor
 - Ändert mehrere Dateien
 - Führt Tests aus
 - Iteriert basierend auf Fehlern
 
+Das geht über Autovervollständigung hinaus.
+
 ---
 
 # Teil 5
-## 🥁 The ugly
+## Grenzen, Risiken & Ethik
 
 ---
 
 ## Wo Agenten scheitern
 
 - Halluzinierte oder falsche Lösungen
-- Sehr verboser code
-- Ähnliche Lösungen an verschiedenen Orten
+- Endlosschleifen
 - Falsches Selbstvertrauen
 - Mangelndes Domänenwissen
 - Überanpassung an Muster statt echtem Denken

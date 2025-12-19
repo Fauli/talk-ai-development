@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}PixelPet - Adopt Your Virtual Pet{% endblock %}
+
+{% block content %}
+<div class="welcome-container">
+    <h1>Welcome to PixelPet!</h1>
+    <div class="pet-showcase">
+        <span class="emoji-pet">🦦</span>
+        <span class="emoji-pet">🐱</span>
+        <span class="emoji-pet">🐉</span>
+        <span class="emoji-pet">🦎</span>
+    </div>
+    <p class="tagline">Adopt and care for your very own virtual pixel pet!</p>
+
+    <div class="features">
+        <div class="feature">
+            <span class="feature-icon">🍖</span>
+            <h3>Feed</h3>
+            <p>Keep your pet well-fed and happy</p>
+        </div>
+        <div class="feature">
+            <span class="feature-icon">🎮</span>
+            <h3>Play</h3>
+            <p>Have fun and boost happiness</p>
+        </div>
+        <div class="feature">
+            <span class="feature-icon">😴</span>
+            <h3>Rest</h3>
+            <p>Let your pet recharge energy</p>
+        </div>
+    </div>
+
+    <div class="cta">
+        {% if user %}
+            <a href="/game" class="btn btn-primary">Go to My Pet</a>
+        {% else %}
+            <a href="/login" class="btn btn-primary">Get Started</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
