@@ -1,0 +1,188 @@
+/* =========================
+   NERD CRT THEME for Reveal
+   ========================= */
+
+/* --- Base / background --- */
+.reveal {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 28px;
+  color: #b7ffbf;
+  background: #050a06;
+}
+
+/* Subtle grid + vignette */
+.reveal::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, rgba(30, 255, 120, 0.10), rgba(0, 0, 0, 0.92) 70%),
+    linear-gradient(rgba(10, 20, 12, 0.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 20, 12, 0.35) 1px, transparent 1px);
+  background-size: auto, 48px 48px, 48px 48px;
+  mix-blend-mode: screen;
+  opacity: 0.9;
+}
+
+/* Scanlines */
+.reveal::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.00) 0px,
+    rgba(0, 0, 0, 0.00) 2px,
+    rgba(0, 0, 0, 0.18) 3px
+  );
+  opacity: 0.55;
+}
+
+/* --- Headings --- */
+.reveal h1, .reveal h2, .reveal h3 {
+  color: #d6ffe0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-shadow:
+    0 0 10px rgba(50, 255, 140, 0.35),
+    0 0 24px rgba(50, 255, 140, 0.18);
+}
+
+/* “Blinking cursor” after headings */
+.reveal h1::after {
+  content: " █";
+  color: #7dff9a;
+  animation: blink 1.05s steps(2, start) infinite;
+}
+@keyframes blink {
+  to { opacity: 0; }
+}
+
+/* --- Text --- */
+.reveal p, .reveal li {
+  text-shadow: 0 0 10px rgba(50, 255, 140, 0.18);
+}
+
+.reveal strong {
+  color: #7dff9a;
+  text-shadow: 0 0 12px rgba(125, 255, 154, 0.35);
+}
+
+.reveal em {
+  color: #9affff;
+  font-style: normal;
+  text-shadow: 0 0 12px rgba(154, 255, 255, 0.25);
+}
+
+/* --- Links --- */
+.reveal a {
+  color: #9affff;
+  text-decoration: none;
+  border-bottom: 2px dashed rgba(154, 255, 255, 0.55);
+}
+.reveal a:hover {
+  border-bottom-style: solid;
+}
+
+/* --- Lists: terminal-ish bullets --- */
+.reveal ul {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+.reveal li {
+  position: relative;
+  padding-left: 1.6em;
+  margin: 0.45em 0;
+}
+.reveal li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: #7dff9a;
+  text-shadow: 0 0 12px rgba(125, 255, 154, 0.35);
+}
+
+/* --- Blockquotes: “system message” panel --- */
+.reveal blockquote {
+  border: 2px solid rgba(125, 255, 154, 0.35);
+  background: rgba(10, 30, 16, 0.55);
+  border-radius: 14px;
+  padding: 0.9em 1.1em;
+  color: #d6ffe0;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.6) inset,
+    0 10px 30px rgba(0,0,0,0.55);
+}
+
+/* --- Code blocks: look like a terminal --- */
+.reveal pre {
+  background: rgba(0, 0, 0, 0.65);
+  border: 2px solid rgba(125, 255, 154, 0.25);
+  border-radius: 16px;
+  padding: 1.05em 1.1em 1.0em;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.7) inset,
+    0 18px 60px rgba(0,0,0,0.7),
+    0 0 24px rgba(50, 255, 140, 0.10);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Fake terminal title bar */
+.reveal pre::before {
+  content: "terminal://agent-session";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0.45em 0.9em;
+  font-size: 0.55em;
+  color: rgba(214, 255, 224, 0.8);
+  background: rgba(8, 20, 12, 0.85);
+  border-bottom: 1px solid rgba(125, 255, 154, 0.18);
+}
+
+/* Push code down to clear title bar */
+.reveal pre code {
+  display: block;
+  padding-top: 1.7em;
+  color: #b7ffbf;
+  font-size: 0.86em;
+  line-height: 1.35;
+}
+
+/* Inline code */
+.reveal p code, .reveal li code {
+  background: rgba(10, 30, 16, 0.55);
+  border: 1px solid rgba(125, 255, 154, 0.25);
+  padding: 0.12em 0.45em;
+  border-radius: 8px;
+  color: #d6ffe0;
+}
+
+/* --- Progress / controls --- */
+.reveal .progress {
+  height: 6px;
+  background: rgba(10, 30, 16, 0.55);
+}
+.reveal .progress span {
+  background: linear-gradient(90deg, #7dff9a, #9affff);
+}
+
+/* --- “HUD” slide number --- */
+.reveal .slide-number {
+  background: rgba(0,0,0,0.55);
+  color: #b7ffbf;
+  border: 1px solid rgba(125, 255, 154, 0.25);
+  border-radius: 10px;
+  padding: 0.2em 0.55em;
+  text-shadow: 0 0 10px rgba(50, 255, 140, 0.20);
+}
+
+/* --- Optional: tighter layout for big screens --- */
+.reveal section {
+  filter: drop-shadow(0 0 10px rgba(50, 255, 140, 0.10));
+}

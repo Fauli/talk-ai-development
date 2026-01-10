@@ -208,7 +208,7 @@ Alter Weg:
 
 ```
 
-Google → StackOverflow → kopieren/einfügen → debuggen → wiederholen
+Google → StackOverflow → kopieren/einfügen → debuggen → iterieren
 
 ```
 
@@ -337,7 +337,7 @@ Note: Switch to CrewAI example!
 
 ---
 
-## "A-Software-Ingenieur" Beispiele
+## "AI-Software-Ingenieur" Beispiele
 
 Fähigkeiten:
 
