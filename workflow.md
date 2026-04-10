@@ -11,6 +11,8 @@ For a project I need a PLAN.md file for my claude code setup. For this project I
 2. Then I use the same AI to create an CLAUDE.md file:
 ```
 create a state of the art CLAUDE.md file for this project.
+---- // OPTIONALLY:
+create a complete, sound and state of the art ARCHITECTURE.md file for the project.
 ```
 3. Then I copy these into a newly created folder and run:
 ```
@@ -21,7 +23,18 @@ claude
 ```
 4. Then within claude, I run:
 ```
-
+Analyze the files given in the project folder. 
+Come up with a complete and comprehensive TODO.md file we can use to implement the application.
+---- // When this is done and I reviewed the proposal:
+Let's start with implementing phase 0 (or whatever the first phase is)
+```
+5. If I want to have mulitple personas/roles. I do something like this:
+```
+Create slash commands I can use and activate the following personas for the given prompt:
+- expert security reviewer
+- expert UX Designer
+- $Product Enthusiast
+- ...
 ```
 
 ## Steps for deployment
