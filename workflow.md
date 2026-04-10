@@ -13,28 +13,28 @@ For a project I need a PLAN.md file for my claude code setup. For this project I
 create a state of the art CLAUDE.md file for this project.
 ```
 
+// OPTIONALLY:
 ```
----- // OPTIONALLY:
 create a complete, sound and state of the art ARCHITECTURE.md file for the project.
 ```
-3. Then I copy these into a newly created folder and run:
+1. Then I copy these into a newly created folder and run:
 ```
 git init
 git add --all
 git commit -m "feat(project): initial AI setup"
 claude
 ```
-4. Then within claude, I run:
+1. Then within claude, I run:
 ```
 Analyze the files given in the project folder. 
 Come up with a complete and comprehensive TODO.md file we can use to implement the application.
 ```
 
+// When the above is done and I reviewed the proposal:
 ```
----- // When the above is done and I reviewed the proposal:
 Let's start with implementing phase 0 (or whatever the first phase is)
 ```
-5. If I want to have mulitple personas/roles. I do something like this:
+1. If I want to have mulitple personas/roles. I do something like this:
 ```
 Create slash commands I can use and activate the following personas for the given prompt:
 - expert security reviewer
@@ -71,15 +71,15 @@ Create a Dockerfile to build the application image so I can deploy it as contain
 Be aware that the setup is working over multiple deployments, so make any data that is needed permanently stored on an outside volume or database.
 ```
 
+// When the above is done:
 ```
----- // When the above is done:
 You can connect to the server $yourdomain as root.
 It's a fresh Ubuntu VM and the SSH keys are already configured.
 Install the application there
 ```
 
+// When the above is done:
 ```
----- // When the above is done:
 The application currently is running on HTTP. Use let'sencrypt to setup HTTPS properly
 ```
 
