@@ -41,13 +41,13 @@ Create slash commands I can use and activate the following personas for the give
 When I want to deploy my webapp, I get a server on Hetzner and a domain on Swizzonic.
 
 ### Hetzner
-![hetzner](./assets/hetzner.png)
+<img src="./assets/hetzner.png" alt="hetzner" width="600">
 
 ### Swizzonic
 
-![alt text](./assets/dns-1.png)
+<img src="./assets/dns-1.png" alt="dns-1" width="600">
 
-![alt text](./assets/dns-2.png)
+<img src="./assets/dns-2.png" alt="dns-2" width="600">
 
 The DNS sync can take a few hours, so do this as early as possible.
 
