@@ -11,6 +11,9 @@ For a project I need a PLAN.md file for my claude code setup. For this project I
 2. Then I use the same AI to create an CLAUDE.md file:
 ```
 create a state of the art CLAUDE.md file for this project.
+```
+
+```
 ---- // OPTIONALLY:
 create a complete, sound and state of the art ARCHITECTURE.md file for the project.
 ```
@@ -25,7 +28,10 @@ claude
 ```
 Analyze the files given in the project folder. 
 Come up with a complete and comprehensive TODO.md file we can use to implement the application.
----- // When this is done and I reviewed the proposal:
+```
+
+```
+---- // When the above is done and I reviewed the proposal:
 Let's start with implementing phase 0 (or whatever the first phase is)
 ```
 5. If I want to have mulitple personas/roles. I do something like this:
@@ -63,11 +69,17 @@ For the setup, I use the same claude session as creating the app, then tell it:
 ```
 Create a Dockerfile to build the application image so I can deploy it as container.
 Be aware that the setup is working over multiple deployments, so make any data that is needed permanently stored on an outside volume or database.
----- // When this is done:
+```
+
+```
+---- // When the above is done:
 You can connect to the server $yourdomain as root.
 It's a fresh Ubuntu VM and the SSH keys are already configured.
 Install the application there
----- // When this is done:
+```
+
+```
+---- // When the above is done:
 The application currently is running on HTTP. Use let'sencrypt to setup HTTPS properly
 ```
 
