@@ -36,6 +36,10 @@ Create slash commands I can use and activate the following personas for the give
 - $Product Enthusiast
 - ...
 ```
+You can then do: /expert-security-reviewer check the current project and validate agains OWASP top 10 and currently known CVEs for the technologies we're using.
+
+
+**Tip:** Use `Shift+Tab` to toggle plan mode — great for thinking through bigger changes before implementing. You'll see "⏸ plan mode on" when it's active.
 
 ## Steps for deployment
 When I want to deploy my webapp, I get a server on [Hetzner](https://www.hetzner.com) and a domain on [Swizzonic](https://www.swizzonic.ch).
