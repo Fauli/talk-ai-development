@@ -70,3 +70,24 @@ Install the application there
 ---- // When this is done:
 The application currently is running on HTTP. Use let'sencrypt to setup HTTPS properly
 ```
+
+## App Created this way
+
+### Game Vault
+
+// TODO
+
+### Screenshot Vault
+
+// TODO
+
+### Bunny market
+
+https://bunny-market.ch/
+<img src="./assets/bunny-market.png" alt="bunny-market" width="600">
+
+### Bunny Clicker Game
+
+https://lan-bunnies.ch/
+
+<img src="./assets/bunny-clicker.png" alt="bunny-clicker" width="600">
