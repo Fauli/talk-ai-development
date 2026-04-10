@@ -38,10 +38,12 @@ Create slash commands I can use and activate the following personas for the give
 ```
 
 ## Steps for deployment
-When I want to deploy my webapp, I get a server on Hetzner and a domain on Swizzonic.
+When I want to deploy my webapp, I get a server on [Hetzner](https://www.hetzner.com) and a domain on [Swizzonic](https://www.swizzonic.ch).
 
 ### Hetzner
 <img src="./assets/hetzner.png" alt="hetzner" width="600">
+
+Sync your SSH keys to the server so the agent can access it easily later.
 
 ### Swizzonic
 
@@ -49,7 +51,7 @@ When I want to deploy my webapp, I get a server on Hetzner and a domain on Swizz
 
 <img src="./assets/dns-2.png" alt="dns-2" width="600">
 
-The DNS sync can take a few hours, so do this as early as possible.
+**The DNS sync can take a few hours, so do this as early as possible.**
 
 ### Setup
 
