@@ -84,10 +84,15 @@ The application currently is running on HTTP. Use let'sencrypt to setup HTTPS pr
 ### Bunny market
 
 https://bunny-market.ch/
+
+Repo: https://github.com/Fauli/bunny-market
+
 <img src="./assets/bunny-market.png" alt="bunny-market" width="600">
 
 ### Bunny Clicker Game
 
 https://lan-bunnies.ch/
+
+Repo: https://github.com/Fauli/bunny-idle-game
 
 <img src="./assets/bunny-clicker.png" alt="bunny-clicker" width="600">
