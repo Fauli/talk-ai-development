@@ -1,4 +1,4 @@
-# My workflow creating an app with AI
+# My workflow creating a website with AI
 
 Date: 10.04.2026
 
